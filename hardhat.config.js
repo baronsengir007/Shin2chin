@@ -32,12 +32,12 @@ module.exports = {
       //   interval: 0
       // },
     },
-    // Only add Arbitrum testnet config if PRIVATE_KEY is set
+    // Only add Base testnet config if PRIVATE_KEY is set
     ...(process.env.PRIVATE_KEY
       ? {
-          arbitrumTestnet: {
-            url: "https://rinkeby.arbitrum.io/rpc",
-            chainId: 421611,
+          baseTestnet: {
+            url: "https://sepolia.base.org",
+            chainId: 84532,
             accounts: [process.env.PRIVATE_KEY],
             gasPrice: "auto",
           },
