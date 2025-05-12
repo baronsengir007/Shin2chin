@@ -1,0 +1,48 @@
+{
+  "name": "shin2chin_bets",
+  "version": "1.0.0",
+  "description": "A peer-to-peer betting platform for combat sports",
+  "main": "index.js",
+  "scripts": {
+    "test": "hardhat test",
+    "test:coverage": "hardhat coverage",
+    "compile": "hardhat compile",
+    "clean": "hardhat clean",
+    "lint": "solhint 'contracts/**/*.sol'",
+    "lint:fix": "solhint 'contracts/**/*.sol' --fix",
+    "slither": "slither .",
+    "deploy:local": "hardhat run scripts/deploy.js --network hardhat",
+    "deploy:testnet": "hardhat run scripts/deploy.js --network arbitrumTestnet"
+  },
+  "keywords": [
+    "ethereum",
+    "arbitrum",
+    "solidity",
+    "hardhat",
+    "betting",
+    "p2p",
+    "combat-sports"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "@nomicfoundation/hardhat-chai-matchers": "^2.0.0",
+    "@nomicfoundation/hardhat-ethers": "^3.0.0",
+    "@nomicfoundation/hardhat-network-helpers": "^1.0.0",
+    "@nomicfoundation/hardhat-verify": "^2.0.0",
+    "chai": "^4.5.0",
+    "ethers": "^6.10.0",
+    "hardhat": "^2.22.8",
+    "hardhat-gas-reporter": "^1.0.10",
+    "solhint": "^4.1.1",
+    "solidity-coverage": "^0.8.11",
+    "@typechain/ethers-v6": "^0.5.0",
+    "@typechain/hardhat": "^9.0.0",
+    "typechain": "^8.3.0"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts-upgradeable": "^4.9.6",
+    "dotenv": "^16.4.5"
+  }
+}
