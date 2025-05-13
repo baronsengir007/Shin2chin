@@ -38,3 +38,43 @@ Integration tests should:
 - Test the interaction between multiple components
 - Verify the final state after a series of operations
 - Include error paths and recovery scenarios
+
+## Tests and User Stories
+
+These tests verify end-to-end workflows that fulfill our core user stories. When adding or modifying tests, ensure they validate complete user journeys as defined in `docs/user_stories.md`.
+
+## User Story Workflows
+
+Each integration test validates a complete user journey:
+
+- **BettingFlow.test.js**: Validates the complete betting workflow from fight creation to settlement, covering:
+  - Admin user story: Creating fights and submitting results
+  - Bettor user story: Depositing funds, placing bets, receiving payouts/refunds
+  - Operator user story: Fee collection on winning bets
+
+- **SettlementFlow.test.js**: Validates the settlement process, covering:
+  - Admin user story: Submitting results
+  - Bettor user story: Receiving winnings and refunds
+  - Operator user story: Fee collection and tracking
+
+- **AdminFlow.test.js**: Validates administrative operations, covering:
+  - Admin user story: Platform management and emergency controls
+
+- **FundFlow.test.js**: Validates funds movement, covering:
+  - Bettor user story: Deposits and withdrawals
+  - Operator user story: Platform fund management
+
+### Test Scenarios
+
+Tests include various scenarios to verify acceptance criteria:
+
+1. **Complete betting cycle**
+   - Verifies payouts to winning bettors and fee collection
+   
+2. **Partially matched bets**
+   - Verifies refunds for unmatched portions
+
+3. **Multiple users with matched bets**
+   - Verifies bet matching across multiple users
+
+When adding new integration tests, ensure they validate specific acceptance criteria from our user stories.

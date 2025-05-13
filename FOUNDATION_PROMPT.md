@@ -45,6 +45,49 @@ The redesign maintains the single-contract architecture but further simplifies c
    - Optimized storage layouts
    - Efficient iteration patterns
 
+## User Stories
+
+The platform is built around three core user stories:
+
+### User Story 1: Placing Bets on Fighters
+
+**As a bettor**, I want to place bets on fighters in scheduled matches so that I can earn money if my prediction is correct.
+
+**Acceptance Criteria:**
+1. I can deposit USDT tokens to my platform balance
+2. I can view available fights including fighter names and scheduled times
+3. I can place a bet of at least 1 USDT and up to 10,000 USDT on either Fighter A or Fighter B
+4. My bet is automatically matched with existing bets from the opposing side when possible
+5. After the fight concludes, I automatically receive payouts (original bet × 2, minus 1% fee) for winning bets
+6. I receive refunds for any unmatched portions of my bets regardless of the fight outcome
+7. I can withdraw my balance (including winnings) to my external wallet at any time
+
+### User Story 2: Managing Fight Events
+
+**As a platform admin**, I want to manage fights and control platform operations so that users can bet on legitimate matches and the platform runs securely.
+
+**Acceptance Criteria:**
+1. I can create fights with unique IDs, fighter names, and future start times
+2. I can ensure betting automatically closes 5 minutes before the scheduled fight start
+3. I can submit fight results (declaring either Fighter A or Fighter B as winner) after the fight concludes
+4. The system automatically settles all bets and distributes payouts/refunds when I submit results
+5. I can pause/unpause all platform operations in emergency situations
+6. I can change admin addresses to ensure continuous platform management
+7. I can perform emergency withdrawals in critical situations while protecting user funds
+
+### User Story 3: Platform Fee Management
+
+**As a platform operator**, I want to collect fees on winning bets so that the platform can sustainably operate while providing a fair P2P betting experience.
+
+**Acceptance Criteria:**
+1. The system automatically collects a 1% fee on all winning payouts
+2. Total platform fees are tracked and reported when fights are settled
+3. All fee transactions are transparent and emitted as events
+4. Collected fees are securely stored in the contract until withdrawn by admins
+5. Fee structure is clearly documented and consistently applied
+
+These user stories drive our architecture and implementation priorities. Each component and function in the system directly supports one or more of these stories, ensuring we remain focused on delivering user value throughout development.
+
 ## Core Use Cases
 
 ### Priority 1: Betting Workflow

@@ -26,6 +26,33 @@ This project has successfully completed Phase 1 (Cleanup & Foundation) of our re
 - Secure fund management using USDT
 - Automated payout distribution
 
+## User Stories
+
+The Shin2Chin platform is designed around these core user needs:
+
+### As a Bettor
+I want to place bets on fighters in scheduled matches so that I can earn money if my prediction is correct.
+
+- Deposit funds, place bets, receive payouts, and withdraw winnings
+- Get automatically matched with opposing bets
+- Receive refunds for any unmatched bet portions
+
+### As a Platform Admin
+I want to manage fights and platform operations so that users can bet on legitimate matches securely.
+
+- Create fights with fighter details and scheduled times
+- Submit fight results and trigger settlements
+- Control platform operations (pause/unpause)
+
+### As a Platform Operator
+I want to collect fees on winning bets so that the platform can operate sustainably.
+
+- Automatic fee collection on winning payouts
+- Transparent fee tracking
+- Platform funds management
+
+Each component in our architecture is designed to support one or more of these user stories, as documented in `docs/user_stories.md`.
+
 ## Development Setup
 
 1. Clone the repository

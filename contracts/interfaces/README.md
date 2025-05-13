@@ -12,9 +12,19 @@ Interfaces define the contract shapes and required functions without implementat
 
 ## Contents
 
-- `IFightManager.sol` - Interface for fight creation and management functionality
-- `IBettingSystem.sol` - Interface for bet placement and matching functionality
-- `IFundManager.sol` - Interface for funds management functionality
+- `IFightManager.sol` - Interface for fight creation and management functionality (supports Admin user story)
+- `IBettingSystem.sol` - Interface for bet placement and matching functionality (supports Bettor user story)
+- `IFundManager.sol` - Interface for funds management functionality (supports Bettor and Operator user stories)
+
+## User Story Mapping
+
+Each interface supports one or more of our core user stories:
+
+- **IBettingSystem.sol**: Defines betting functionality for the Bettor user story
+- **IFightManager.sol**: Defines fight management for the Admin user story
+- **IFundManager.sol**: Defines fund operations for both Bettor and Operator user stories
+
+For full user story details, see `docs/user_stories.md`.
 
 ## Usage
 
