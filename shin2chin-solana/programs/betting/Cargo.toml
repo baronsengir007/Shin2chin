@@ -1,0 +1,19 @@
+[package]
+name = "shin2chin-betting"
+version = "0.1.0"
+description = "Solana-based betting program for Shin2Chin platform"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib", "lib"]
+
+[features]
+no-entrypoint = []
+no-idl = []
+no-log-ix-name = []
+cpi = ["no-entrypoint"]
+default = []
+
+[dependencies]
+anchor-lang = "0.28.0"
+solana-program = "1.16.0"
