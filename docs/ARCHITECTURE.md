@@ -1,3 +1,36 @@
+# Refined MCP-Enhanced Architecture
+
+## Component Changes
+- Gary AI Interface (React) + Confirmation Protocol
+- AI Backend (HeyAnon SDK)
+- Wallet Connection (Phantom/Solflare) + Transaction Handler
+- Solana Betting Program (Anchor) + Explicit PDA Structure
+- Oracle Integration
+- Admin Interface
+- Payout Handler + Timer Service
+- UI State Manager
+- State Sync Service (NEW)
+- Error Management Service (NEW)
+- Testing Framework
+
+## Updated Data Flow
+- User input → Gary AI (with Confirmation Protocol) → intent parse → bet preview → explicit confirmation → wallet (with Transaction Handler) → Solana program (with explicit PDA structure) → oracle → payout handler (with Timer Service) → State Sync Service updates UI → Error Management Service handles/report errors throughout.
+- Admin input → event form → Solana program/oracle → event listing. All flows monitored by State Sync and Error Management.
+
+## Component Responsibilities
+- Timer Service: Ensures 30s payout, retries on oracle delay, user payout status
+- Confirmation Protocol: Explicit 'Yes/No' confirmation, clear stake/team display, standardized messaging
+- State Sync Service: Monitors blockchain state, updates UI, handles recovery
+- Transaction Handler: Retry logic, status monitoring, user feedback
+- Explicit PDA Structure: Defines event, bet, admin accounts
+- Error Management Service: Standardized errors, user-friendly messages, recovery suggestions
+
+## Rationale
+- Each refinement is the minimal addition needed to prevent specific downstream problems and directly serves user stories.
+- No feature creep: Only the 6 critical refinements are included.
+
+## Architecture Design Complete
+
 # Architecture Design
 
 > **Note**: This document will be populated during Phase 1 - Architecture Design.
