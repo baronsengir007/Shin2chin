@@ -1,85 +1,109 @@
-# Refined MCP-Enhanced Architecture
+# Shin2Chin Betting Platform Architecture
 
-## Component Changes
-- Gary AI Interface (React) + Confirmation Protocol
-- AI Backend (HeyAnon SDK)
-- Wallet Connection (Phantom/Solflare) + Transaction Handler
-- Solana Betting Program (Anchor) + Explicit PDA Structure
-- Oracle Integration
-- Admin Interface
-- Payout Handler + Timer Service
-- UI State Manager
-- State Sync Service (NEW)
-- Error Management Service (NEW)
-- Testing Framework
+## System Overview
 
-## Updated Data Flow
-- User input → Gary AI (with Confirmation Protocol) → intent parse → bet preview → explicit confirmation → wallet (with Transaction Handler) → Solana program (with explicit PDA structure) → oracle → payout handler (with Timer Service) → State Sync Service updates UI → Error Management Service handles/report errors throughout.
-- Admin input → event form → Solana program/oracle → event listing. All flows monitored by State Sync and Error Management.
+The Shin2Chin platform is an AI-powered peer-to-peer crypto betting application built on the Solana blockchain. This document outlines the refined architecture design that satisfies the core user stories with specific enhancements to prevent downstream problems.
+
+## Component Architecture
+
+### Core Components
+
+- **Gary AI Interface (React)** with Confirmation Protocol
+- **AI Backend** (HeyAnon SDK)
+- **Wallet Connection** (Phantom/Solflare) with Transaction Handler
+- **Solana Betting Program** (Anchor) with Explicit PDA Structure
+- **Oracle Integration**
+- **Admin Interface**
+- **Payout Handler** with Timer Service
+- **UI State Manager**
+- **State Sync Service**
+- **Error Management Service**
+- **Testing Framework**
+
+### Component Diagram
+
+```
+┌───────────────┐     ┌───────────────┐     ┌───────────────┐
+│  Frontend UI  │     │  Admin Panel  │     │ Wallet Apps   │
+└───────┬───────┘     └───────┬───────┘     └───────┬───────┘
+        │                     │                     │
+┌───────┴───────┐     ┌───────┴───────┐     ┌───────┴───────┐
+│   Gary AI     │     │ Event Manager │     │  Transaction  │
+│  Interface    │◄────┤               │     │   Handler     │
+└───────┬───────┘     └───────┬───────┘     └───────┬───────┘
+        │                     │                     │
+┌───────┴───────┐     ┌───────┴───────┐     ┌───────┴───────┐
+│  HeyAnon SDK  │     │    State      │     │   Solana      │
+│  Integration  │     │ Sync Service  │     │  Blockchain   │
+└───────┬───────┘     └───────┬───────┘     └───────┬───────┘
+        │                     │                     │
+        └─────────────┬───────┴─────────────┬───────┘
+                      │                     │
+              ┌───────┴───────┐     ┌───────┴───────┐
+              │    Betting    │     │    Oracle     │
+              │    Program    │────►│    Program    │
+              └───────┬───────┘     └───────┬───────┘
+                      │                     │
+                      └─────────────┬───────┘
+                                    │
+                            ┌───────┴───────┐
+                            │ Payout Handler│
+                            │ & Timer Svc   │
+                            └───────────────┘
+```
+
+## Data Flow
+
+### Betting Flow
+1. User input → Gary AI (with Confirmation Protocol)
+2. Intent parsing → bet preview
+3. Explicit confirmation → wallet (with Transaction Handler)
+4. Solana program (with explicit PDA structure)
+5. Oracle integration
+6. Payout handler (with Timer Service)
+7. State Sync Service updates UI
+8. Error Management Service handles/reports errors throughout
+
+### Admin Flow
+1. Admin input → event form
+2. Solana program/oracle → event listing
+3. All flows monitored by State Sync and Error Management
 
 ## Component Responsibilities
-- Timer Service: Ensures 30s payout, retries on oracle delay, user payout status
-- Confirmation Protocol: Explicit 'Yes/No' confirmation, clear stake/team display, standardized messaging
-- State Sync Service: Monitors blockchain state, updates UI, handles recovery
-- Transaction Handler: Retry logic, status monitoring, user feedback
-- Explicit PDA Structure: Defines event, bet, admin accounts
-- Error Management Service: Standardized errors, user-friendly messages, recovery suggestions
 
-## Rationale
-- Each refinement is the minimal addition needed to prevent specific downstream problems and directly serves user stories.
-- No feature creep: Only the 6 critical refinements are included.
+### Timer Service
+- Ensures 30-second payout requirement
+- Implements retry logic on oracle delays
+- Provides user payout status updates
 
-## Architecture Design Complete
+### Confirmation Protocol
+- Explicit 'Yes/No' confirmation flow
+- Clear stake/team display
+- Standardized messaging format
 
-# Architecture Design
+### State Sync Service
+- Monitors blockchain state
+- Updates UI in real-time
+- Handles recovery from interruptions
 
-> **Note**: This document will be populated during Phase 1 - Architecture Design.
+### Transaction Handler
+- Implements retry logic
+- Monitors transaction status
+- Provides user feedback on transaction progress
 
-## Overview
+### Explicit PDA Structure
+- Clearly defines event accounts
+- Structures bet accounts
+- Manages admin accounts
 
-This document will describe the architectural design of the Shin2Chin Solana AI Betting Platform, including:
+### Error Management Service
+- Standardized error handling
+- User-friendly error messages
+- Recovery suggestions for common issues
 
-- System components and their interactions
-- Smart contract architecture
-- Data flow diagrams
-- Security considerations
-- Scalability approach
+## Design Rationale
 
-## Core Components
-
-### Planned Architecture Components
-
-1. **Solana Smart Contracts**
-   - Betting program (main contract)
-   - Oracle integration 
-   - Token handling
-
-2. **Gary AI Integration**
-   - Conversational interface
-   - Betting intent extraction
-   - Natural language understanding
-
-3. **Wallet Integration**
-   - Phantom and Solflare support
-   - Transaction signing flow
-   - Account management
-
-4. **Frontend Application**
-   - React component structure
-   - State management
-   - UI/UX considerations
-
-5. **Admin Interface**
-   - Event management
-   - Platform monitoring
-   - Oracle configuration
-
-## Future Updates
-
-This document will be fully populated during Phase 1 of the project development cycle. The architecture will be designed to fulfill the 5 core user stories while maintaining a focus on:
-
-- Non-custodial peer-to-peer betting
-- Conversational AI interface
-- Minimal, focused UI
-- Secure wallet interactions
-- Automated settlement
+- Each architectural refinement addresses specific requirements from the user stories
+- Components are designed with minimal coupling for easier maintenance
+- The architecture prioritizes user experience while ensuring blockchain integration
+- No feature creep: Only critical components are included

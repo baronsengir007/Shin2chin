@@ -227,3 +227,29 @@ The MVP will be considered successful when:
 This focused MVP plan provides a clear roadmap for delivering the essential functionality required by the 5 user stories. By limiting scope to the 28 most critical tasks, we ensure a streamlined development process that can deliver value to users within 13 weeks.
 
 After MVP completion, subsequent phases can introduce enhancements, analytics, performance optimizations, and advanced features based on user feedback and platform adoption.
+
+## Foundational System Complete
+
+### Project Context
+First read PROJECT_CONTEXT.md for complete project foundation
+
+### Task-Specific Requirements
+[Insert specific task details here]
+
+### MCP Integration
+[Describe which MCPs to use and how for this task]
+
+### User Story Validation
+- Which user stories does this task serve?
+- Which acceptance criteria are addressed?
+- How will you validate user story completion?
+
+### Quality Standards & Testing
+- Implementation must follow standards in PROJECT_CONTEXT.md
+- All code must be tested (unit/integration as appropriate)
+- UI/UX must meet minimalist and clarity requirements
+- Store all key decisions in Memory MCP with clear naming
+
+### Context Storage
+- Store all new context, decisions, and outcomes in Memory MCP using descriptive keys
+- Reference PROJECT_CONTEXT.md in all documentation and code comments where relevant

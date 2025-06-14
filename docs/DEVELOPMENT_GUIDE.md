@@ -1,63 +1,141 @@
-# Development Guide
+# Shin2Chin Development Guide
+
+This guide provides instructions for setting up the development environment and working with the Shin2Chin betting platform.
+
+## Prerequisites
+
+- **Rust & Cargo (v1.87.0+)** - For Solana program development
+- **Solana CLI (v1.18.x)** - For blockchain interaction
+- **Anchor Framework (v0.31.x)** - For smart contract development
+- **Node.js (v18+) & npm** - For frontend development
+
+## Installation
+
+### 1. Install Rust and Cargo
+```bash
+# Windows (PowerShell)
+Invoke-WebRequest -Uri https://sh.rustup.rs -UseBasicParsing | Invoke-Expression
+# or
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
+# Verify installation
+rustc --version
+cargo --version
+```
+
+### 2. Install Solana CLI Tools
+```bash
+# Windows (PowerShell) - using GitHub release (recommended)
+Invoke-WebRequest -Uri "https://github.com/solana-labs/solana/releases/download/v1.18.26/solana-install-init-x86_64-pc-windows-msvc.exe" -OutFile "$env:TEMP\solana-install.exe"
+& "$env:TEMP\solana-install.exe" v1.18.26
+
+# Add to PATH
+$env:PATH = "$env:LOCALAPPDATA\solana\install\active_release\bin;$env:PATH"
+
+# Verify installation
+solana --version
+```
+
+### 3. Install Anchor Framework
+```bash
+# Using cargo
+cargo install --git https://github.com/coral-xyz/anchor anchor-cli --locked --tag v0.30.1
+
+# Verify installation
+anchor --version
+```
+
+### 4. Configure Solana for Local Development
+```bash
+solana config set --url localhost
+solana-keygen new --no-bip39-passphrase
+```
+
+### 5. Project Setup
+```bash
+# Clone repository
+git clone <repository-url>
+cd shin2chin-solana
+
+# Install project dependencies
+npm install
+
+# Install frontend dependencies
+cd app
+npm install
+cd ../admin
+npm install
+cd ..
+
+# Build Solana programs
+anchor build
+```
 
 ## Development Workflow
 
-### Prerequisites
-- Solana CLI tools
-- Anchor Framework
-- Node.js and npm
-- Rust and Cargo
+### 1. Start Local Validator
+```bash
+# In a separate terminal
+solana-test-validator
+```
 
-### Local Development Setup
+### 2. Build and Deploy Programs
+```bash
+anchor build
+anchor deploy
+```
 
-1. **Clone the repository**
-   ```bash
-   git clone <repository-url>
-   cd shin2chin-solana
-   ```
+### 3. Run Tests
+```bash
+anchor test
+```
 
-2. **Install dependencies**
-   ```bash
-   # Root dependencies
-   npm install
-   
-   # App dependencies
-   cd app
-   npm install
-   
-   # Admin dependencies
-   cd ../admin
-   npm install
-   ```
+### 4. Run Frontend Application
+```bash
+cd app
+npm start
+```
 
-3. **Setup local Solana validator**
-   ```bash
-   solana-test-validator
-   ```
+### 5. Run Admin Interface
+```bash
+cd admin
+npm start
+```
 
-4. **Build Solana programs**
-   ```bash
-   anchor build
-   ```
+## Project Structure
 
-5. **Deploy to local network**
-   ```bash
-   anchor deploy
-   ```
-
-6. **Run frontend application**
-   ```bash
-   cd app
-   npm start
-   ```
-
-7. **Run admin interface**
-   ```bash
-   cd admin
-   npm start
-   ```
+```
+shin2chin-solana/
+├── programs/               # Solana smart contracts
+│   ├── betting/            # P2P betting program
+│   │   ├── src/
+│   │   │   ├── lib.rs      # Program entry point
+│   │   │   ├── state.rs    # Account definitions
+│   │   │   ├── errors.rs   # Error definitions
+│   │   │   └── instructions/  # Instruction handlers
+│   │   └── Cargo.toml      # Rust dependencies
+│   └── oracle/             # Result verification program
+├── app/                    # User-facing frontend
+│   ├── src/
+│   │   ├── components/     # React components
+│   │   ├── services/       # Service integrations
+│   │   │   ├── ai/         # Gary AI integration
+│   │   │   └── program/    # Solana program integration
+│   │   └── pages/          # App pages
+│   └── package.json        # Frontend dependencies
+├── admin/                  # Admin interface
+├── sdk/                    # TypeScript SDK
+├── tests/                  # Integration tests
+│   ├── betting.ts          # Betting program tests
+│   └── integration.ts      # End-to-end tests
+└── Anchor.toml             # Anchor configuration
+```
 
 ## Development Standards
+
+### Package Naming
+- Use `@coral-xyz/anchor` instead of `@project-serum/anchor` (updated package)
+- Use `@solana/web3.js` for Solana blockchain interaction
 
 ### Code Organization
 - **Frontend**: Follow React component best practices with separation of concerns
@@ -72,20 +150,19 @@ Follow conventional commits:
 - `test:` for test additions or changes
 - `refactor:` for code refactoring
 
-### Pull Request Process
-1. Create feature branch from `main`
-2. Implement changes with tests
-3. Submit PR with descriptive title and details
-4. Wait for CI checks and code review
-5. Merge after approval
+## Known Issues and Workarounds
 
-## Key Architectural Principles
+### Solana CLI Installation
+- If the default installer fails, try installing directly from GitHub releases
+- Windows users may need to run the installer with administrator privileges
 
-1. **Conversational First**: All user interactions should be possible through Gary AI
-2. **Non-Custodial**: No user funds held in smart contract beyond active bets
-3. **Minimal UI**: Focus on essential information only
-4. **Direct Wallet Integration**: Seamless wallet connection and transaction flow
-5. **Oracle Automation**: All settlements through verified oracles
+### Anchor Build Issues
+- Ensure Rust version is at least 1.87.0
+- Anchor version is locked at 0.30.1 for compatibility
+
+### Gary AI Integration
+- The HeyAnon SDK integration is currently stubbed
+- Development can proceed with the placeholder implementation
 
 ## Testing Strategy
 
