@@ -6,8 +6,7 @@
  */
 
 import { useState, useEffect, useCallback } from 'react';
-// This would be the actual import in a real implementation
-// import { HeyAnonClient } from 'heyanon-automate-sdk';
+// import { HeyAnonClient } from 'heyanon-automate-sdk'; // (removed, not used)
 
 // Define types for betting intent
 export interface BettingIntent {

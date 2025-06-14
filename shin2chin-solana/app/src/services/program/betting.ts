@@ -7,7 +7,7 @@
 
 import { useCallback } from 'react';
 import { useAnchorWallet, useConnection } from '@solana/wallet-adapter-react';
-import { Program, AnchorProvider } from '@project-serum/anchor';
+import { Program, AnchorProvider } from '@coral-xyz/anchor';
 import { PublicKey, Transaction } from '@solana/web3.js';
 import { BettingIntent } from '../ai/gary';
 

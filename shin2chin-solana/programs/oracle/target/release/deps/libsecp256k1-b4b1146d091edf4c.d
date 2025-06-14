@@ -1,0 +1,11 @@
+C:\Users\singa\Desktop\AI app development\Shin2Chin_bets\shin2chin-solana\programs\oracle\target\release\deps\liblibsecp256k1-b4b1146d091edf4c.rmeta: C:\Users\singa\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\libsecp256k1-0.6.0\src\lib.rs C:\Users\singa\Desktop\AI\ app\ development\Shin2Chin_bets\shin2chin-solana\programs\oracle\target\release\build\libsecp256k1-79bed451d6051647\out/const.rs C:\Users\singa\Desktop\AI\ app\ development\Shin2Chin_bets\shin2chin-solana\programs\oracle\target\release\build\libsecp256k1-79bed451d6051647\out/const_gen.rs
+
+C:\Users\singa\Desktop\AI app development\Shin2Chin_bets\shin2chin-solana\programs\oracle\target\release\deps\liblibsecp256k1-b4b1146d091edf4c.rlib: C:\Users\singa\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\libsecp256k1-0.6.0\src\lib.rs C:\Users\singa\Desktop\AI\ app\ development\Shin2Chin_bets\shin2chin-solana\programs\oracle\target\release\build\libsecp256k1-79bed451d6051647\out/const.rs C:\Users\singa\Desktop\AI\ app\ development\Shin2Chin_bets\shin2chin-solana\programs\oracle\target\release\build\libsecp256k1-79bed451d6051647\out/const_gen.rs
+
+C:\Users\singa\Desktop\AI app development\Shin2Chin_bets\shin2chin-solana\programs\oracle\target\release\deps\libsecp256k1-b4b1146d091edf4c.d: C:\Users\singa\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\libsecp256k1-0.6.0\src\lib.rs C:\Users\singa\Desktop\AI\ app\ development\Shin2Chin_bets\shin2chin-solana\programs\oracle\target\release\build\libsecp256k1-79bed451d6051647\out/const.rs C:\Users\singa\Desktop\AI\ app\ development\Shin2Chin_bets\shin2chin-solana\programs\oracle\target\release\build\libsecp256k1-79bed451d6051647\out/const_gen.rs
+
+C:\Users\singa\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\libsecp256k1-0.6.0\src\lib.rs:
+C:\Users\singa\Desktop\AI\ app\ development\Shin2Chin_bets\shin2chin-solana\programs\oracle\target\release\build\libsecp256k1-79bed451d6051647\out/const.rs:
+C:\Users\singa\Desktop\AI\ app\ development\Shin2Chin_bets\shin2chin-solana\programs\oracle\target\release\build\libsecp256k1-79bed451d6051647\out/const_gen.rs:
+
+# env-dep:OUT_DIR=C:\\Users\\singa\\Desktop\\AI app development\\Shin2Chin_bets\\shin2chin-solana\\programs\\oracle\\target\\release\\build\\libsecp256k1-79bed451d6051647\\out
