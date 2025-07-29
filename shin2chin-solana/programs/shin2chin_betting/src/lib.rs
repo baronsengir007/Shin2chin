@@ -1,4 +1,5 @@
 use anchor_lang::prelude::*;
+use anchor_lang::solana_program::hash::hash;
 
 declare_id!("Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS");
 
@@ -17,7 +18,7 @@ declare_id!("Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS");
 pub mod shin2chin_betting {
     use super::*;
 
-    /// Phase A placeholder - create_event instruction to be implemented
+    /// Create a new betting event with oracle integration
     pub fn create_event(
         ctx: Context<CreateEvent>,
         title: String,
@@ -26,9 +27,38 @@ pub mod shin2chin_betting {
         option_b: String,
         deadline: i64,
         settlement_time: i64,
+        oracle_pubkey: Pubkey,
     ) -> Result<()> {
-        // Implementation will be added in next phase
-        msg!("Event creation placeholder");
+        // Validate all input parameters
+        Event::validate_inputs(
+            &title,
+            &description,
+            &option_a,
+            &option_b,
+            deadline,
+            settlement_time,
+        )?;
+
+        let event = &mut ctx.accounts.event;
+        let clock = Clock::get()?;
+
+        // Initialize event with all required fields
+        event.admin = ctx.accounts.admin.key();
+        event.oracle_pubkey = oracle_pubkey;
+        event.title = title;
+        event.description = description;
+        event.option_a = option_a;
+        event.option_b = option_b;
+        event.deadline = deadline;
+        event.settlement_time = settlement_time;
+        event.created_at = clock.unix_timestamp;
+        event.status = EventStatus::Active;
+        event.winner = None;
+        event.total_pool_a = 0;
+        event.total_pool_b = 0;
+        event.bump = ctx.bumps.event;
+
+        msg!("Event created successfully with oracle: {}", oracle_pubkey);
         Ok(())
     }
 }
@@ -56,11 +86,12 @@ pub enum BetOption {
 }
 
 /**
- * Event Account - Complete structure per Memory MCP analysis
+ * Event Account - Complete structure with oracle integration
  * 
- * Space calculation: 1007 bytes total
+ * Space calculation: 1048 bytes total
  * - discriminator: 8 bytes
  * - admin: 32 bytes  
+ * - oracle_pubkey: 32 bytes (NEW)
  * - title: 204 bytes (4 + 200)
  * - description: 504 bytes (4 + 500)
  * - option_a: 104 bytes (4 + 100)
@@ -68,14 +99,18 @@ pub enum BetOption {
  * - timestamps: 24 bytes (3 × 8)
  * - enums: 4 bytes (status + winner option)
  * - pools: 16 bytes (2 × 8)
- * - padding: 16 bytes for future fields
+ * - bump: 1 byte
+ * - padding: 24 bytes for future fields
  * 
- * Total: 1016 bytes → allocate 1024 bytes
+ * Total: 1048 bytes → allocate 1072 bytes
  */
 #[account]
 pub struct Event {
     /// Admin who created the event (required for PDA seeds)
     pub admin: Pubkey,
+    
+    /// Oracle responsible for settling this event
+    pub oracle_pubkey: Pubkey,
     
     /// Event metadata
     pub title: String,        // max 200 chars
@@ -104,7 +139,7 @@ pub struct Event {
 
 impl Event {
     /// Space allocation for Event account
-    pub const SPACE: usize = 1024; // Per Memory MCP analysis
+    pub const SPACE: usize = 1072; // Updated for oracle integration
     
     /// Maximum string lengths for validation
     pub const MAX_TITLE_LENGTH: usize = 200;
@@ -120,24 +155,50 @@ impl Event {
         deadline: i64,
         settlement_time: i64,
     ) -> Result<()> {
+        // Length validation
+        require!(
+            !title.trim().is_empty(),
+            ErrorCode::EmptyTitle
+        );
         require!(
             title.len() <= Self::MAX_TITLE_LENGTH,
             ErrorCode::TitleTooLong
+        );
+        require!(
+            !description.trim().is_empty(),
+            ErrorCode::EmptyDescription
         );
         require!(
             description.len() <= Self::MAX_DESCRIPTION_LENGTH,
             ErrorCode::DescriptionTooLong
         );
         require!(
+            !option_a.trim().is_empty(),
+            ErrorCode::EmptyOption
+        );
+        require!(
             option_a.len() <= Self::MAX_OPTION_LENGTH,
             ErrorCode::OptionTooLong
+        );
+        require!(
+            !option_b.trim().is_empty(),
+            ErrorCode::EmptyOption
         );
         require!(
             option_b.len() <= Self::MAX_OPTION_LENGTH,
             ErrorCode::OptionTooLong
         );
+        
+        // Options must be different
         require!(
-            deadline > Clock::get()?.unix_timestamp,
+            option_a.trim() != option_b.trim(),
+            ErrorCode::IdenticalOptions
+        );
+        
+        // Time validation
+        let current_time = Clock::get()?.unix_timestamp;
+        require!(
+            deadline > current_time,
             ErrorCode::DeadlineInPast
         );
         require!(
@@ -150,7 +211,7 @@ impl Event {
 }
 
 /// Account structure for creating a new Event
-/// Uses PDA with seeds [b"event", admin.key(), counter.to_le_bytes()]
+/// Uses hash-based PDA with seeds [b"event", admin.key(), &hash[0..8]]
 #[derive(Accounts)]
 #[instruction(
     title: String,
@@ -158,18 +219,24 @@ impl Event {
     option_a: String,
     option_b: String,
     deadline: i64,
-    settlement_time: i64
+    settlement_time: i64,
+    oracle_pubkey: Pubkey
 )]
 pub struct CreateEvent<'info> {
     #[account(mut)]
     pub admin: Signer<'info>,
     
-    /// Event PDA account - will be implemented with proper seeds in next phase
+    /// Event PDA account with hash-based derivation
+    /// Seeds: [b"event", admin.key(), &hash(title+description+options)[0..8]]
     #[account(
         init,
         payer = admin,
         space = Event::SPACE,
-        seeds = [b"event", admin.key().as_ref()], // Simplified for Phase A
+        seeds = [
+            b"event", 
+            admin.key().as_ref(), 
+            &hash(format!("{}{}{}{}", title, description, option_a, option_b).as_bytes()).to_bytes()[0..8]
+        ],
         bump
     )]
     pub event: Account<'info, Event>,
@@ -190,4 +257,14 @@ pub enum ErrorCode {
     DeadlineInPast,
     #[msg("Settlement time must be after betting deadline")]
     SettlementBeforeDeadline,
+    #[msg("Event title cannot be empty")]
+    EmptyTitle,
+    #[msg("Event description cannot be empty")]
+    EmptyDescription,
+    #[msg("Betting options cannot be empty")]
+    EmptyOption,
+    #[msg("Betting options must be different")]
+    IdenticalOptions,
+    #[msg("Oracle public key cannot be the same as admin")]
+    InvalidOracleKey,
 }
