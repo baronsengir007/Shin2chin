@@ -39,6 +39,12 @@ pub mod shin2chin_betting {
             settlement_time,
         )?;
 
+        // Validate oracle is not the same as admin
+        require!(
+            oracle_pubkey != ctx.accounts.admin.key(),
+            ErrorCode::InvalidOracleKey
+        );
+
         let event = &mut ctx.accounts.event;
         let clock = Clock::get()?;
 
