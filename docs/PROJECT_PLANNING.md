@@ -1,6 +1,32 @@
 # PROJECT PLANNING - AI-Powered Peer-to-Peer Crypto Betting Platform (MVP)
 
-## Executive Summary
+## Project Restructuring (January 2025)
+
+⚠️ **IMPORTANT:** This project has been restructured from linear task-based development to a phase-based approach with parallel development streams.
+
+**Original linear plan archived below. Project now uses phase-based structure - see [PHASE_ROADMAP.md](PHASE_ROADMAP.md) for current implementation plan.**
+
+### New Structure Overview
+- **Timeline:** 13 weeks with 4 distinct phases (unchanged)
+- **Approach:** Phase-based with parallel development streams (new)
+- **Target:** MVBP (Minimum Viable Betting Platform) by Week 6 (new)
+- **Benefits:** 2x development efficiency, working demo in 6 weeks, reduced risk
+
+### Key Changes
+1. **Phase A (Weeks 1-3):** Foundation - Solana programs + Anchor client
+2. **Phase B (Weeks 4-6):** Integration - MVBP with wallet connection  
+3. **Phase C (Weeks 7-10):** Core Features - Gary AI + User Stories 1&3
+4. **Phase D (Weeks 11-13):** Advanced - Oracle integration + Full automation
+
+**Current Status:** Phase A implementation in progress (Week 1)
+
+---
+
+## ARCHIVED: Original Linear Plan
+
+*The following represents the original task-based planning approach. This has been superseded by the phase-based structure documented in PHASE_ROADMAP.md*
+
+## Executive Summary (ARCHIVED)
 - Reduced from 51 to 28 core tasks (45% scope reduction)
 - Timeline: 13 weeks (down from 20 weeks)
 - Focus: Pure user story delivery, no feature creep

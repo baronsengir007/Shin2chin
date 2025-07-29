@@ -1,51 +1,70 @@
 # Shin2Chin Betting Platform Documentation
 
-## Project Status: Phase 1 Complete, Phase 2 Starting
+## Project Status: Phase A - Foundation (Week 1 of 13)
+
+### Phase-Based Development Structure
+The project follows a **4-phase development approach** with parallel development streams for maximum efficiency:
+
+- **Phase A (Weeks 1-3):** Foundation - Solana programs + Anchor client ← *Current*
+- **Phase B (Weeks 4-6):** Integration - MVBP with wallet connection
+- **Phase C (Weeks 7-10):** Core Features - Gary AI + User Stories 1&3  
+- **Phase D (Weeks 11-13):** Advanced - Oracle integration + Full automation
+
+**Target:** Working demo (MVBP) by Week 6, full platform by Week 13
 
 ### Essential Documentation
+- [Phase Roadmap](./PHASE_ROADMAP.md) - Complete phase-based development plan
+- [MVBP Specification](./MVBP_SPECIFICATION.md) - 6-week target definition
+- [Project Status](./PROJECT_STATUS.md) - Current phase progress
+- [Development Guide](./DEVELOPMENT_GUIDE.md) - Phase A workflow and setup
 - [User Stories](./USER_STORIES.md) - Core requirements
 - [Architecture](./ARCHITECTURE.md) - System design
-- [Implementation Status](./IMPLEMENTATION_STATUS.md) - Current code state
-- [Development Guide](./DEVELOPMENT_GUIDE.md) - Setup instructions
-- [API Reference](./API_REFERENCE.md) - Program interfaces
+- [Project Planning](./PROJECT_PLANNING.md) - Archived linear plan + restructuring notes
 
-### Environment & Setup
-- [Environment Status](./ENVIRONMENT_VALIDATION_REPORT.md) - Tool versions
-- [Troubleshooting](./ENVIRONMENT_TROUBLESHOOTING_GUIDE.md) - Common issues
+### Current Phase A Focus
+**Priority Stream:** Solana program implementation (70% effort)
+- Complete betting program with PDAs
+- Basic settlement logic
+- Devnet deployment and testing
 
-### Development Progress
-- Phase 1: ✅ Environment Setup Complete
-- Phase 2: 🚧 Core Implementation (Starting)
+**Support Stream:** Frontend mock services (30% effort)
+- React TypeScript structure completion
+- Mock service layer for development
+- Basic UI components without wallet integration
 
-### Quick Start
+### Phase A Quick Start
 All tools installed and verified:
 - Solana CLI 1.18.26
-- Anchor 0.31.1
+- Anchor 0.31.1  
 - Rust 1.87.0
 - Node.js 22.15.0
 
-Setup commands:
+**For Solana Development (Primary Focus):**
 ```bash
-# Clone and install dependencies
+# Setup and build programs
 git clone <repository-url>
 cd shin2chin-solana
 npm install
-
-# Install frontend dependencies
-cd app
-npm install
-cd ../admin
-npm install
-cd ..
-
-# Build and test
 anchor build
-anchor test
 
-# Run frontend
-cd app
-npm start
+# Start local validator (separate terminal)
+solana-test-validator
+
+# Deploy and test programs
+anchor deploy
+anchor test --skip-local-validator
 ```
+
+**For Frontend Development (Mock Services):**
+```bash
+# Install and run with mock data
+cd app
+npm install
+npm start
+# Note: No wallet connection required in Phase A
+```
+
+See [Development Guide](./DEVELOPMENT_GUIDE.md) for detailed Phase A workflow.
 
 ### Project Structure
 ```
@@ -60,4 +79,10 @@ shin2chin-solana/
 ```
 
 ### Next Development Steps
-See [Implementation Status](./IMPLEMENTATION_STATUS.md) for detailed next steps.
+**Phase A Priorities (Current):**
+1. Complete Solana betting program implementation
+2. Setup Program Derived Accounts (PDAs)  
+3. Implement basic settlement logic
+4. Deploy and test on devnet
+
+See [Phase Roadmap](./PHASE_ROADMAP.md) for complete development plan and [Project Status](./PROJECT_STATUS.md) for current progress tracking.

@@ -1,6 +1,39 @@
 # Shin2Chin Development Guide
 
-This guide provides instructions for setting up the development environment and working with the Shin2Chin betting platform.
+This guide provides instructions for setting up the development environment and working with the Shin2Chin betting platform using our phase-based development approach.
+
+## Phase-Based Development Approach
+
+The project follows a structured 4-phase development model with parallel development streams:
+
+- **Phase A (Weeks 1-3):** Foundation - Solana programs + Anchor client
+- **Phase B (Weeks 4-6):** Integration - MVBP with wallet connection
+- **Phase C (Weeks 7-10):** Core Features - Gary AI + User Stories 1&3
+- **Phase D (Weeks 11-13):** Advanced - Oracle integration + Full automation
+
+### Current Phase: Phase A - Foundation
+
+**Priority Focus:** Solana program implementation and basic Anchor client setup
+**Target:** Working event creation and betting on devnet by Week 3
+
+### Parallel Development Streams
+
+#### Stream 1: Solana Development (Primary focus in Phase A)
+- Complete betting program implementation
+- Set up Program Derived Accounts (PDAs)
+- Deploy and test on devnet
+- Basic settlement logic
+
+#### Stream 2: Frontend Development (Mock services in Phase A)
+- React TypeScript structure
+- Mock service layer for development
+- Basic UI components without wallet integration
+- Local development setup
+
+#### Stream 3: Support Systems
+- Testing framework setup
+- Documentation updates
+- Development tooling
 
 ## Prerequisites
 
@@ -73,31 +106,55 @@ anchor build
 
 ## Development Workflow
 
-### 1. Start Local Validator
-```bash
-# In a separate terminal
-solana-test-validator
-```
+### Phase A Workflow (Current)
 
-### 2. Build and Deploy Programs
+#### For Solana Development (Primary Stream)
 ```bash
+# 1. Start Local Validator
+solana-test-validator
+
+# 2. Build and Deploy Programs
 anchor build
 anchor deploy
+
+# 3. Run Solana-specific Tests
+anchor test --skip-local-validator
 ```
 
-### 3. Run Tests
+#### For Frontend Development (Mock Services)
 ```bash
-anchor test
-```
-
-### 4. Run Frontend Application
-```bash
+# 1. Run Frontend with Mock Services
 cd app
 npm start
+
+# 2. Use mock data for development
+# (No wallet connection required in Phase A)
 ```
 
-### 5. Run Admin Interface
+#### Parallel Stream Coordination
+- **Daily standups:** Sync between Solana and Frontend streams
+- **Weekly demos:** Show Phase A progress to stakeholders
+- **Integration points:** Test mock services against real Solana programs
+
+### Standard Development Commands
+
+#### General Development
 ```bash
+# Start Local Validator
+solana-test-validator
+
+# Build and Deploy Programs
+anchor build
+anchor deploy
+
+# Run Tests
+anchor test
+
+# Run Frontend Application
+cd app
+npm start
+
+# Run Admin Interface
 cd admin
 npm start
 ```
