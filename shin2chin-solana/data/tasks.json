@@ -1,0 +1,147 @@
+{
+  "tasks": [
+    {
+      "id": "bca0c17b-4c3c-49f4-8125-d71aa81a1057",
+      "name": "Update PROJECT_STATUS.md with Phase-Based Structure",
+      "description": "Replace the current linear task list in PROJECT_STATUS.md with the new 4-phase structure (A, B, C, D), update completion percentages based on phase progress instead of individual tasks, and add MVBP definition with 6-week target timeline",
+      "notes": "Ensure phase completion criteria are clearly defined and measurable",
+      "status": "in_progress",
+      "dependencies": [],
+      "createdAt": "2025-07-29T12:00:39.507Z",
+      "updatedAt": "2025-07-29T12:01:22.774Z",
+      "relatedFiles": [
+        {
+          "path": "docs/PROJECT_STATUS.md",
+          "type": "TO_MODIFY",
+          "description": "Main project status tracking document"
+        }
+      ],
+      "implementationGuide": "1. Read current PROJECT_STATUS.md to understand existing structure\n2. Replace linear task tracking with phase-based tracking:\n   - Phase A (Foundation): Solana programs + Anchor client (Weeks 1-3)\n   - Phase B (Integration): MVBP with wallet connection (Weeks 4-6) \n   - Phase C (Core Features): Gary AI + user stories 1&3 (Weeks 7-10)\n   - Phase D (Advanced): Oracle + full automation (Weeks 11-13)\n3. Update completion percentages: Phase A (15% complete), Phase B (0%), Phase C (25%), Phase D (0%)\n4. Add MVBP section with specific features and 6-week target\n5. Update overall project status to reflect 34% completion with phase breakdown",
+      "verificationCriteria": "PROJECT_STATUS.md shows 4 clear phases instead of linear tasks, includes MVBP definition, has updated completion percentages, and maintains all existing project context",
+      "analysisResult": "Update all project documentation to reflect the approved phase-based restructuring from linear task approach to 4-phase development with parallel streams, MVBP definition, and 13-week timeline"
+    },
+    {
+      "id": "67402176-ae3a-4e72-8dc7-25d014a2a342",
+      "name": "Update DEVELOPMENT_GUIDE.md with Phase-Based Approach",
+      "description": "Add comprehensive phase-based development approach to DEVELOPMENT_GUIDE.md, include parallel stream coordination guidelines for 2-developer team, and update task instructions to reference phases instead of linear sequence",
+      "notes": "Include specific examples of how developers coordinate between streams",
+      "status": "pending",
+      "dependencies": [
+        {
+          "taskId": "bca0c17b-4c3c-49f4-8125-d71aa81a1057"
+        }
+      ],
+      "createdAt": "2025-07-29T12:00:39.507Z",
+      "updatedAt": "2025-07-29T12:00:39.507Z",
+      "relatedFiles": [
+        {
+          "path": "docs/DEVELOPMENT_GUIDE.md",
+          "type": "TO_MODIFY",
+          "description": "Development process and guidelines"
+        }
+      ],
+      "implementationGuide": "1. Read current DEVELOPMENT_GUIDE.md to understand existing structure\n2. Add new section: 'Phase-Based Development Approach'\n   - Explain why phases replace linear tasks\n   - Detail each phase with objectives and deliverables\n   - Show dependency relationships between phases\n3. Add 'Parallel Development Streams' section:\n   - Stream 1 (Solana): Programs → PDAs → Business Logic → Oracle\n   - Stream 2 (Frontend): Mock Services → Wallet Integration → AI → UX\n   - Stream 3 (Support): Testing → Documentation → Deployment\n4. Add coordination guidelines for daily standups and phase transitions\n5. Update existing task instructions to reference appropriate phases",
+      "verificationCriteria": "DEVELOPMENT_GUIDE.md includes clear phase-based approach, parallel stream coordination guidelines, updated task instructions, and maintains all existing development standards",
+      "analysisResult": "Update all project documentation to reflect the approved phase-based restructuring from linear task approach to 4-phase development with parallel streams, MVBP definition, and 13-week timeline"
+    },
+    {
+      "id": "6223cb0a-c783-40ed-ba4d-afea4e20a33e",
+      "name": "Create PHASE_ROADMAP.md Documentation",
+      "description": "Create comprehensive new documentation file detailing each of the 4 phases (A, B, C, D) with specific deliverables, dependencies between phases, success criteria, and timeline for each phase",
+      "notes": "Make this the definitive reference for phase-based development",
+      "status": "pending",
+      "dependencies": [
+        {
+          "taskId": "bca0c17b-4c3c-49f4-8125-d71aa81a1057"
+        }
+      ],
+      "createdAt": "2025-07-29T12:00:39.507Z",
+      "updatedAt": "2025-07-29T12:00:39.507Z",
+      "relatedFiles": [
+        {
+          "path": "docs/PHASE_ROADMAP.md",
+          "type": "CREATE",
+          "description": "New comprehensive phase roadmap documentation"
+        }
+      ],
+      "implementationGuide": "1. Create new file: docs/PHASE_ROADMAP.md\n2. Structure with sections for each phase:\n   Phase A (Foundation - Weeks 1-3):\n   - Deliverables: Working Solana programs, Event/Bet PDAs, Anchor client\n   - Success criteria: Can create events and place bets on devnet\n   - Dependencies: None (starting point)\n   \n   Phase B (Integration - Weeks 4-6):\n   - Deliverables: MVBP with wallet connection, admin event management\n   - Success criteria: Working MVBP with real wallets on testnet\n   - Dependencies: Phase A complete\n   \n   Phase C (Core Features - Weeks 7-10):\n   - Deliverables: Gary AI, bet confirmation flow, user stories 1&3\n   - Success criteria: Full user stories 1&3 functional\n   - Dependencies: Phase B complete\n   \n   Phase D (Advanced - Weeks 11-13):\n   - Deliverables: Oracle integration, real-time updates, HeyAnon SDK\n   - Success criteria: All 5 user stories working on mainnet\n   - Dependencies: Phase C complete\n3. Add dependency diagram showing phase relationships\n4. Include resource allocation for each phase",
+      "verificationCriteria": "PHASE_ROADMAP.md provides complete phase breakdown with clear deliverables, success criteria, dependencies, timeline, and resource allocation for all 4 phases",
+      "analysisResult": "Update all project documentation to reflect the approved phase-based restructuring from linear task approach to 4-phase development with parallel streams, MVBP definition, and 13-week timeline"
+    },
+    {
+      "id": "3531915d-e20e-4d09-ac16-fb2a07858fdf",
+      "name": "Update PROJECT_PLANNING.md with Restructuring Documentation",
+      "description": "Archive the original linear plan in PROJECT_PLANNING.md, document the complete restructuring rationale based on gap analysis, and add the progressive release schedule with 5 releases over 13 weeks",
+      "notes": "Preserve all historical context while clearly documenting the restructuring decision",
+      "status": "pending",
+      "dependencies": [
+        {
+          "taskId": "6223cb0a-c783-40ed-ba4d-afea4e20a33e"
+        }
+      ],
+      "createdAt": "2025-07-29T12:00:39.507Z",
+      "updatedAt": "2025-07-29T12:00:39.507Z",
+      "relatedFiles": [
+        {
+          "path": "docs/PROJECT_PLANNING.md",
+          "type": "TO_MODIFY",
+          "description": "Project planning and timeline documentation"
+        }
+      ],
+      "implementationGuide": "1. Read current PROJECT_PLANNING.md to preserve existing content\n2. Add 'Project Restructuring (January 2025)' section:\n   - Document original linear approach and its problems\n   - Explain 85% missing Solana logic bottleneck\n   - Justify phase-based restructuring with dependency analysis\n3. Archive original plan in 'Historical Planning' section\n4. Add 'Progressive Release Schedule':\n   - Release 1 (Week 6): MVBP with manual settlement\n   - Release 2 (Week 8): Oracle automation\n   - Release 3 (Week 10): Gary AI conversation\n   - Release 4 (Week 12): Real-time updates  \n   - Release 5 (Week 13): HeyAnon SDK integration\n5. Update timeline section with new 13-week schedule\n6. Add benefits analysis of restructuring approach",
+      "verificationCriteria": "PROJECT_PLANNING.md documents restructuring rationale, archives original plan, includes progressive release schedule, and maintains historical project context",
+      "analysisResult": "Update all project documentation to reflect the approved phase-based restructuring from linear task approach to 4-phase development with parallel streams, MVBP definition, and 13-week timeline"
+    },
+    {
+      "id": "3c3280f8-aaa5-493a-bc79-99785c72dbb8",
+      "name": "Create MVBP_SPECIFICATION.md",
+      "description": "Create detailed specification document for the Minimum Viable Betting Platform (MVBP) defining exact features for the 6-week MVP, clear inclusion/exclusion criteria, and measurable success metrics",
+      "notes": "This becomes the contract for what constitutes a successful Phase B completion",
+      "status": "pending",
+      "dependencies": [
+        {
+          "taskId": "6223cb0a-c783-40ed-ba4d-afea4e20a33e"
+        }
+      ],
+      "createdAt": "2025-07-29T12:00:39.507Z",
+      "updatedAt": "2025-07-29T12:00:39.507Z",
+      "relatedFiles": [
+        {
+          "path": "docs/MVBP_SPECIFICATION.md",
+          "type": "CREATE",
+          "description": "Detailed MVBP feature specification and success criteria"
+        }
+      ],
+      "implementationGuide": "1. Create new file: docs/MVBP_SPECIFICATION.md\n2. Define MVBP scope:\n   INCLUDED FEATURES:\n   - Admin creates betting events through web interface\n   - Users connect wallet (Phantom/Solflare) and place binary bets\n   - Simple 1:1 bet matching algorithm (no partial fills)\n   - Manual settlement by admin (no oracle automation)\n   - Basic UI showing only essential information (team names, bet amount, outcome)\n   - Escrow through individual bet PDAs for fund safety\n   \n   EXCLUDED FEATURES (Deferred to later phases):\n   - Gary AI conversation interface\n   - HeyAnon SDK integration\n   - Oracle automated settlement\n   - Real-time account updates\n   - Complex bet matching algorithms\n   - Advanced UI animations\n3. Add success metrics:\n   - Can create events through admin interface\n   - Can place first real bet through connected wallet\n   - Funds properly escrowed in bet PDAs\n   - Manual settlement transfers funds correctly\n4. Include user acceptance criteria for each feature\n5. Add technical requirements and constraints",
+      "verificationCriteria": "MVBP_SPECIFICATION.md clearly defines included/excluded features, provides measurable success metrics, includes user acceptance criteria, and serves as Phase B completion contract",
+      "analysisResult": "Update all project documentation to reflect the approved phase-based restructuring from linear task approach to 4-phase development with parallel streams, MVBP definition, and 13-week timeline"
+    },
+    {
+      "id": "7d40b801-f2a6-4231-9650-f628e8500227",
+      "name": "Update README.md with New Project Structure",
+      "description": "Update the main README.md to reflect the new phase-based project structure, provide quick start guide for phase-based development, and update the project timeline from linear to 4-phase approach",
+      "notes": "README.md should give newcomers immediate understanding of phase-based approach",
+      "status": "pending",
+      "dependencies": [
+        {
+          "taskId": "3c3280f8-aaa5-493a-bc79-99785c72dbb8"
+        },
+        {
+          "taskId": "bca0c17b-4c3c-49f4-8125-d71aa81a1057"
+        }
+      ],
+      "createdAt": "2025-07-29T12:00:39.507Z",
+      "updatedAt": "2025-07-29T12:00:39.507Z",
+      "relatedFiles": [
+        {
+          "path": "README.md",
+          "type": "TO_MODIFY",
+          "description": "Main project documentation and overview"
+        }
+      ],
+      "implementationGuide": "1. Read current README.md to preserve essential project information\n2. Update 'Project Overview' section:\n   - Maintain core project description (AI-powered P2P betting on Solana)\n   - Add phase-based development approach summary\n   - Update timeline: 13 weeks, 4 phases, MVBP in 6 weeks\n3. Add 'Development Phases' section:\n   - Brief description of each phase (A, B, C, D)\n   - Current status: Phase A in progress\n   - Link to PHASE_ROADMAP.md for details\n4. Update 'Quick Start' section:\n   - Add phase-based development setup\n   - Include parallel stream coordination\n   - Reference DEVELOPMENT_GUIDE.md for details\n5. Update 'Project Status' section with phase completion percentages\n6. Add links to new documentation (PHASE_ROADMAP.md, MVBP_SPECIFICATION.md)\n7. Ensure all existing technical setup information remains accurate",
+      "verificationCriteria": "README.md provides clear project overview with phase-based structure, includes quick start for new approach, shows updated timeline, links to all new documentation, and maintains all technical accuracy",
+      "analysisResult": "Update all project documentation to reflect the approved phase-based restructuring from linear task approach to 4-phase development with parallel streams, MVBP definition, and 13-week timeline"
+    }
+  ]
+}
