@@ -1,31 +1,23 @@
 {
   "name": "shin2chin_bets",
   "version": "1.0.0",
-  "description": "A peer-to-peer betting platform for combat sports",
+  "description": "A peer-to-peer betting platform for combat sports on Solana",
   "main": "index.js",
   "scripts": {
-    "test": "hardhat test",
-    "test:coverage": "hardhat coverage",
-    "test:gas": "REPORT_GAS=true hardhat test",
-    "compile": "hardhat compile",
-    "clean": "hardhat clean",
-    "lint": "solhint 'contracts/**/*.sol'",
-    "lint:fix": "solhint 'contracts/**/*.sol' --fix",
-    "slither": "slither .",
-    "prettier": "prettier --write 'contracts/**/*.sol'",
-    "deploy:local": "hardhat run scripts/deploy.js --network hardhat",
-    "deploy:testnet": "hardhat run scripts/deploy.js --network baseTestnet",
-    "verify": "hardhat verify",
-    "docs:generate": "solidity-docgen --solc-module solc-0.8.17"
+    "build": "cd shin2chin-solana && anchor build",
+    "test": "cd shin2chin-solana && anchor test",
+    "deploy:devnet": "cd shin2chin-solana && anchor deploy",
+    "deploy:mainnet": "cd shin2chin-solana && anchor deploy --provider.cluster mainnet",
+    "localnet": "solana-test-validator",
+    "logs": "solana logs"
   },
   "keywords": [
-    "ethereum",
-    "base",
-    "solidity",
-    "hardhat",
+    "solana",
+    "anchor",
     "betting",
     "p2p",
-    "combat-sports"
+    "combat-sports",
+    "defi"
   ],
   "author": "",
   "license": "ISC",
@@ -34,34 +26,10 @@
     "@modelcontextprotocol/server-github": "^2025.4.8",
     "@modelcontextprotocol/server-memory": "^2025.4.25",
     "@modelcontextprotocol/server-sequential-thinking": "^0.6.2",
-    "@nomicfoundation/hardhat-chai-matchers": "^2.0.3",
-    "@nomicfoundation/hardhat-ethers": "^3.0.5",
-    "@nomicfoundation/hardhat-network-helpers": "^1.0.10",
-    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
-    "@nomicfoundation/hardhat-verify": "^2.0.3",
-    "@openzeppelin/hardhat-upgrades": "^3.0.4",
-    "@typechain/ethers-v6": "^0.5.1",
-    "@typechain/hardhat": "^9.1.0",
-    "chai": "^4.5.0",
-    "dotenv-safe": "^8.2.0",
-    "ethers": "^6.11.1",
-    "figma-developer-mcp": "^0.3.0",
-    "hardhat": "^2.22.8",
-    "hardhat-contract-sizer": "^2.10.0",
-    "hardhat-gas-reporter": "^1.0.10",
-    "mocha": "^10.2.0",
-    "prettier": "^3.2.5",
-    "prettier-plugin-solidity": "^1.3.1",
-    "sinon": "^17.0.1",
-    "solhint": "^4.1.1",
-    "solhint-plugin-prettier": "^0.1.0",
-    "solidity-coverage": "^0.8.11",
-    "solidity-docgen": "^0.6.0-beta.36",
-    "typechain": "^8.3.2"
+    "figma-developer-mcp": "^0.3.0"
   },
   "dependencies": {
     "@heyanon/sdk": "^2.2.0",
-    "@openzeppelin/contracts-upgradeable": "^4.9.6",
     "dotenv": "^16.4.5"
   }
 }
