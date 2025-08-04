@@ -1,0 +1,113 @@
+/* Shin2Chin Frontend - Layer 1 Foundation Styles */
+
+.App {
+  text-align: center;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+}
+
+.app-header {
+  background-color: #f8f9fa;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.app-header h1 {
+  color: #333;
+  margin-bottom: 0.5rem;
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+.subtitle {
+  color: #28a745;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.status-info {
+  background-color: #e9ecef;
+  padding: 1rem;
+  border-radius: 8px;
+  display: inline-block;
+  margin-top: 1rem;
+}
+
+.status-info p {
+  color: #495057;
+  margin: 0.25rem 0;
+  font-size: 0.9rem;
+}
+
+.app-main {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: 1fr;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.foundation-status {
+  background-color: #d4edda;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid #c3e6cb;
+}
+
+.foundation-status h2 {
+  color: #155724;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.foundation-status ul {
+  text-align: left;
+  display: inline-block;
+  color: #155724;
+}
+
+.foundation-status li {
+  margin: 0.5rem 0;
+  font-weight: 500;
+}
+
+.next-steps {
+  background-color: #fff3cd;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid #ffeaa7;
+}
+
+.next-steps h3 {
+  color: #856404;
+  margin-bottom: 0.5rem;
+  font-size: 1.3rem;
+}
+
+.next-steps p {
+  color: #856404;
+  margin: 0;
+  font-weight: 500;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .App {
+    padding: 1rem;
+  }
+  
+  .app-header h1 {
+    font-size: 2rem;
+  }
+  
+  .app-header {
+    padding: 1.5rem;
+  }
+}
