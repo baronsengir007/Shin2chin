@@ -1,0 +1,8 @@
+
+> shin2chin-frontend@0.0.1 dev
+> vite
+
+
+  VITE v5.4.19  ready in 1017 ms
+
+  ➜  Local:   http://localhost:3000/
