@@ -1,8 +1,0 @@
-/mnt/c/Users/singa/Desktop/AI app development/Shin2Chin_bets/shin2chin-solana/programs/shin2chin_betting/target/debug/deps/solana_instruction-d5cf425e65a6ba0d.d: /home/singasinga/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/solana-instruction-2.3.0/src/lib.rs /home/singasinga/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/solana-instruction-2.3.0/src/account_meta.rs /home/singasinga/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/solana-instruction-2.3.0/src/error.rs /home/singasinga/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/solana-instruction-2.3.0/src/syscalls.rs
-
-/mnt/c/Users/singa/Desktop/AI app development/Shin2Chin_bets/shin2chin-solana/programs/shin2chin_betting/target/debug/deps/libsolana_instruction-d5cf425e65a6ba0d.rmeta: /home/singasinga/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/solana-instruction-2.3.0/src/lib.rs /home/singasinga/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/solana-instruction-2.3.0/src/account_meta.rs /home/singasinga/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/solana-instruction-2.3.0/src/error.rs /home/singasinga/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/solana-instruction-2.3.0/src/syscalls.rs
-
-/home/singasinga/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/solana-instruction-2.3.0/src/lib.rs:
-/home/singasinga/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/solana-instruction-2.3.0/src/account_meta.rs:
-/home/singasinga/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/solana-instruction-2.3.0/src/error.rs:
-/home/singasinga/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/solana-instruction-2.3.0/src/syscalls.rs:
