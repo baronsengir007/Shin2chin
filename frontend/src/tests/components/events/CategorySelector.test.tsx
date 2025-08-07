@@ -150,28 +150,28 @@ describe('CategorySelector', () => {
     render(<CategorySelector {...defaultProps} />);
     
     expect(screen.getByText('Popular categories:')).toBeInTheDocument();
-    expect(screen.getByText('Basketball')).toBeInTheDocument();
-    expect(screen.getByText('Soccer')).toBeInTheDocument();
-    expect(screen.getByText('Bitcoin')).toBeInTheDocument();
-    expect(screen.getByText('Elections')).toBeInTheDocument();
-    expect(screen.getByText('Movies')).toBeInTheDocument();
+    expect(screen.getByText('E-Sports')).toBeInTheDocument();
+    expect(screen.getByText('Crypto Trading')).toBeInTheDocument();
+    expect(screen.getByText('Presidential Race')).toBeInTheDocument();
+    expect(screen.getByText('Box Office')).toBeInTheDocument();
+    expect(screen.getByText('Tech News')).toBeInTheDocument();
   });
 
   it('calls onCategoryChange when popular category is selected', () => {
     const onCategoryChange = vi.fn();
     render(<CategorySelector {...defaultProps} onCategoryChange={onCategoryChange} />);
     
-    const bitcoinButton = screen.getByRole('button', { name: 'Bitcoin' });
-    fireEvent.click(bitcoinButton);
+    const cryptoTradingButton = screen.getByRole('button', { name: 'Crypto Trading' });
+    fireEvent.click(cryptoTradingButton);
     
-    expect(onCategoryChange).toHaveBeenCalledWith('Bitcoin');
+    expect(onCategoryChange).toHaveBeenCalledWith('Crypto Trading');
   });
 
   it('highlights selected category in popular list', () => {
-    render(<CategorySelector {...defaultProps} selectedCategory="Basketball" />);
+    render(<CategorySelector {...defaultProps} selectedCategory="E-Sports" />);
     
-    const basketballButton = screen.getByRole('button', { name: 'Basketball' });
-    expect(basketballButton).toHaveClass('bg-blue-600');
+    const eSportsButton = screen.getByRole('button', { name: 'E-Sports' });
+    expect(eSportsButton).toHaveClass('bg-blue-600');
   });
 
   it('highlights selected main category', () => {

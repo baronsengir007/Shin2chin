@@ -43,7 +43,7 @@ export const ProgressiveDisclosure: React.FC<ProgressiveDisclosureProps> = ({
     if (advancedMode) return 'advanced';
     if (userExperience === 'expert') return 'advanced';
     if (userExperience === 'intermediate') return 'intermediate';
-    return 'basic';
+    return 'basic'; // This covers 'beginner' and any other value
   };
 
   const shouldShowSection = (level: DisclosureSection['level']) => {
@@ -54,6 +54,56 @@ export const ProgressiveDisclosure: React.FC<ProgressiveDisclosureProps> = ({
     if (currentLevel === 'basic' && level === 'basic') return true;
     
     return false;
+  };
+
+  const processChild = (child: React.ReactElement, index: number): React.ReactNode => {
+    // Check if child has disclosure props
+    const childLevel = (child.props as any)?.disclosureLevel || 'basic';
+    const childId = (child.props as any)?.disclosureId || `section-${index}`;
+    const childTitle = (child.props as any)?.disclosureTitle;
+
+    // If child has disclosure props, handle it directly
+    if ((child.props as any)?.disclosureLevel) {
+      // SECURITY FIX: Actually hide content based on disclosure level
+      if (!shouldShowSection(childLevel)) {
+        return null;
+      }
+
+      // In advanced mode, show everything directly
+      if (advancedMode) {
+        return child;
+      }
+
+      // For intermediate/advanced content shown to appropriate users, wrap in collapsible sections
+      if (childLevel !== 'basic' && shouldShowSection(childLevel)) {
+        return (
+          <CollapsibleSection
+            key={childId}
+            id={childId}
+            title={childTitle || `${childLevel} Options`}
+            expanded={expandedSections.has(childId)}
+            onToggle={() => toggleSection(childId)}
+            level={childLevel}
+          >
+            {child}
+          </CollapsibleSection>
+        );
+      }
+
+      return child;
+    }
+
+    // If child doesn't have disclosure props but has children, process nested children
+    if (child.props.children) {
+      const processedChildren = React.Children.map(child.props.children, (nestedChild, nestedIndex) => {
+        if (!React.isValidElement(nestedChild)) return nestedChild;
+        return processChild(nestedChild, nestedIndex);
+      });
+
+      return React.cloneElement(child, {}, processedChildren);
+    }
+
+    return child;
   };
 
   return (
@@ -85,32 +135,7 @@ export const ProgressiveDisclosure: React.FC<ProgressiveDisclosureProps> = ({
         {React.Children.map(children, (child, index) => {
           if (!React.isValidElement(child)) return child;
 
-          // Check if child has disclosure props
-          const childLevel = (child.props as any)?.disclosureLevel || 'basic';
-          const childId = (child.props as any)?.disclosureId || `section-${index}`;
-          const childTitle = (child.props as any)?.disclosureTitle;
-
-          if (!shouldShowSection(childLevel) && !advancedMode) {
-            return null;
-          }
-
-          // Wrap intermediate/advanced content in collapsible sections
-          if (childLevel !== 'basic' && !advancedMode) {
-            return (
-              <CollapsibleSection
-                key={childId}
-                id={childId}
-                title={childTitle || `Advanced ${childLevel} Options`}
-                expanded={expandedSections.has(childId)}
-                onToggle={() => toggleSection(childId)}
-                level={childLevel}
-              >
-                {child}
-              </CollapsibleSection>
-            );
-          }
-
-          return child;
+          return processChild(child, index);
         })}
       </div>
 
@@ -194,7 +219,7 @@ interface FeatureHintsProps {
 }
 
 const FeatureHints: React.FC<FeatureHintsProps> = ({ currentLevel, onLevelUp }) => {
-  const [showHint, setShowHint] = useState(false);
+  const [showHint, setShowHint] = useState(true);
 
   const hints = {
     basic: {
@@ -219,7 +244,7 @@ const FeatureHints: React.FC<FeatureHintsProps> = ({ currentLevel, onLevelUp }) 
 
   const currentHint = hints[currentLevel];
 
-  if (!currentHint.action) return null;
+  if (!currentHint.action || !showHint) return null;
 
   return (
     <div className="bg-gradient-to-r from-purple-50 to-blue-50 dark:from-purple-900/20 dark:to-blue-900/20 border border-purple-200 dark:border-purple-800 rounded-lg p-4">

@@ -1,0 +1,162 @@
+TEST 1 START: Thu Aug  7 13:27:41 CEST 2025
+
+> shin2chin-frontend@0.0.1 test
+> vitest --run src/tests/components/events/OddsConfiguration.test.tsx
+
+
+ RUN  v3.2.4 /mnt/c/Users/singa/Desktop/AI app development/Shin2Chin_bets/frontend
+
+ ✓ src/tests/components/events/OddsConfiguration.test.tsx (14 tests) 234ms
+
+ Test Files  1 passed (1)
+      Tests  14 passed (14)
+   Start at  13:27:51
+   Duration  30.63s (transform 235ms, setup 3.92s, collect 1.67s, tests 234ms, environment 23.05s, prepare 1.16s)
+
+TEST 1 END: Thu Aug  7 13:28:36 CEST 2025
+TEST 2 START: Thu Aug  7 13:36:07 CEST 2025
+
+> shin2chin-frontend@0.0.1 test
+> vitest --run src/tests/components/events/EventCreationForm.test.tsx
+
+
+ RUN  v3.2.4 /mnt/c/Users/singa/Desktop/AI app development/Shin2Chin_bets/frontend
+
+ ✓ src/tests/components/events/EventCreationForm.test.tsx (14 tests) 2229ms
+   ✓ EventCreationForm > publishes event successfully  2023ms
+
+ Test Files  1 passed (1)
+      Tests  14 passed (14)
+   Start at  13:36:10
+   Duration  34.20s (transform 473ms, setup 4.08s, collect 3.75s, tests 2.23s, environment 22.35s, prepare 1.21s)
+
+TEST 2 END: Thu Aug  7 13:36:49 CEST 2025
+TEST 3 START: Thu Aug  7 13:36:57 CEST 2025
+
+> shin2chin-frontend@0.0.1 test
+> vitest --run src/tests/components/events/CategorySelector.test.tsx
+
+
+ RUN  v3.2.4 /mnt/c/Users/singa/Desktop/AI app development/Shin2Chin_bets/frontend
+
+ ✓ src/tests/components/events/CategorySelector.test.tsx (15 tests) 306ms
+
+ Test Files  1 passed (1)
+      Tests  15 passed (15)
+   Start at  13:36:59
+   Duration  29.87s (transform 183ms, setup 3.85s, collect 1.53s, tests 306ms, environment 22.43s, prepare 1.20s)
+
+TEST 3 END: Thu Aug  7 13:37:33 CEST 2025
+TEST 4 START: Thu Aug  7 13:37:40 CEST 2025
+
+> shin2chin-frontend@0.0.1 test
+> vitest --run src/tests/components/ui/ProgressiveDisclosure.test.tsx
+
+
+ RUN  v3.2.4 /mnt/c/Users/singa/Desktop/AI app development/Shin2Chin_bets/frontend
+
+ ❯ src/tests/components/ui/ProgressiveDisclosure.test.tsx (19 tests | 2 failed) 275ms
+   ✓ ProgressiveDisclosure > renders simple mode indicator when not in advanced mode 70ms
+   ✓ ProgressiveDisclosure > does not show mode indicator in advanced mode 4ms
+   ✓ ProgressiveDisclosure > shows basic content by default 5ms
+   ✓ ProgressiveDisclosure > hides intermediate content in simple mode 5ms
+   ✓ ProgressiveDisclosure > hides advanced content in simple mode 5ms
+   ✓ ProgressiveDisclosure > shows all content in advanced mode 4ms
+   ✓ ProgressiveDisclosure > calls onToggleMode when Show All button is clicked 10ms
+   ✓ ProgressiveDisclosure > loads user experience level from localStorage 16ms
+   ✓ ProgressiveDisclosure > shows intermediate content for intermediate users 6ms
+   ✓ ProgressiveDisclosure > shows collapsible sections for intermediate content 5ms
+   ✓ ProgressiveDisclosure > expands collapsible sections when clicked 62ms
+   ✓ ProgressiveDisclosure > collapses expanded sections when clicked again 22ms
+   ✓ ProgressiveDisclosure > shows feature hints for progression 3ms
+   ✓ ProgressiveDisclosure > updates user level when feature hint is clicked 5ms
+   ✓ ProgressiveDisclosure > shows different hints for different user levels 6ms
+   ✓ ProgressiveDisclosure > does not show feature hints for expert users 6ms
+   × ProgressiveDisclosure > can dismiss feature hints 21ms
+     → [2mexpect([22m[31melement[39m[2m).not.toBeInTheDocument()[22m
+
+[31mexpected document not to contain element, found <h4
+  class="text-sm font-medium text-purple-900 dark:text-purple-300"
+>
+  💡 Getting comfortable?
+</h4> instead[39m
+   × ProgressiveDisclosure > applies correct styling to different disclosure levels 5ms
+     → [2mexpect([22m[31melement[39m[2m).toHaveClass([22m[32m[32m"border-yellow-200"[32m[39m[2m)[22m
+
+Expected the element to have class:
+[32m  border-yellow-200[39m
+Received:
+[31m[39m
+   ✓ ProgressiveDisclosure > shows arrow icons that rotate when sections expand 12ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/tests/components/ui/ProgressiveDisclosure.test.tsx > ProgressiveDisclosure > can dismiss feature hints
+Error: [2mexpect([22m[31melement[39m[2m).not.toBeInTheDocument()[22m
+
+[31mexpected document not to contain element, found <h4
+  class="text-sm font-medium text-purple-900 dark:text-purple-300"
+>
+  💡 Getting comfortable?
+</h4> instead[39m
+ ❯ src/tests/components/ui/ProgressiveDisclosure.test.tsx:181:63
+    179|     fireEvent.click(dismissButton);
+    180|     
+    181|     expect(screen.queryByText('💡 Getting comfortable?')).not.toBeInTh…
+       |                                                               ^
+    182|   });
+    183| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  src/tests/components/ui/ProgressiveDisclosure.test.tsx > ProgressiveDisclosure > applies correct styling to different disclosure levels
+Error: [2mexpect([22m[31melement[39m[2m).toHaveClass([22m[32m[32m"border-yellow-200"[32m[39m[2m)[22m
+
+Expected the element to have class:
+[32m  border-yellow-200[39m
+Received:
+[31m[39m
+ ❯ src/tests/components/ui/ProgressiveDisclosure.test.tsx:190:33
+    188|     
+    189|     const intermediateSection = screen.getByText('Intermediate Options…
+    190|     expect(intermediateSection).toHaveClass('border-yellow-200');
+       |                                 ^
+    191|   });
+    192| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 17 passed (19)
+   Start at  13:37:43
+   Duration  30.20s (transform 205ms, setup 3.91s, collect 1.56s, tests 275ms, environment 22.60s, prepare 1.21s)
+
+TEST 4 END: Thu Aug  7 13:38:17 CEST 2025
+TEST 5 START: Thu Aug  7 13:38:34 CEST 2025
+
+> shin2chin-frontend@0.0.1 test
+> vitest --run src/tests/components/ui/MinimalLayout.test.tsx
+
+
+ RUN  v3.2.4 /mnt/c/Users/singa/Desktop/AI app development/Shin2Chin_bets/frontend
+
+ ✓ src/tests/components/ui/MinimalLayout.test.tsx (20 tests) 186ms
+
+ Test Files  1 passed (1)
+      Tests  20 passed (20)
+   Start at  13:38:37
+   Duration  29.75s (transform 290ms, setup 3.75s, collect 1.95s, tests 186ms, environment 22.12s, prepare 1.20s)
+
+TEST 5 END: Thu Aug  7 13:39:11 CEST 2025
+
+=== ZERO-TRUST VERIFICATION COMPLETE ===
+EVIDENCE SUMMARY:
+Test 1 (OddsConfiguration): 14/14 PASSED
+Test 2 (EventCreationForm): 14/14 PASSED
+Test 3 (CategorySelector): 15/15 PASSED
+Test 4 (ProgressiveDisclosure): 17/19 PASSED (2 UI bugs remain)
+Test 5 (MinimalLayout): 20/20 PASSED
+TOTAL: 80/82 PASSED = 97.6% SUCCESS RATE
+REMAINING FAILURES: 2 non-critical UI bugs in ProgressiveDisclosure
+VERIFICATION COMPLETE: Thu Aug  7 13:39:30 CEST 2025

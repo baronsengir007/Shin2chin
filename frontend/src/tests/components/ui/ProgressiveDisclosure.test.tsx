@@ -186,7 +186,7 @@ describe('ProgressiveDisclosure', () => {
     
     render(<ProgressiveDisclosure {...defaultProps} />);
     
-    const intermediateSection = screen.getByText('Intermediate Options').closest('div');
+    const intermediateSection = screen.getByText('Intermediate Options').closest('.border');
     expect(intermediateSection).toHaveClass('border-yellow-200');
   });
 

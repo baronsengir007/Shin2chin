@@ -163,7 +163,7 @@ export const CategorySelector: React.FC<CategorySelectorProps> = ({
         <div className="mt-4">
           <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">Popular categories:</p>
           <div className="flex flex-wrap gap-2">
-            {['Basketball', 'Soccer', 'Bitcoin', 'Elections', 'Movies'].map((popular) => (
+            {['E-Sports', 'Crypto Trading', 'Presidential Race', 'Box Office', 'Tech News'].map((popular) => (
               <button
                 key={popular}
                 onClick={() => onCategoryChange(popular)}
