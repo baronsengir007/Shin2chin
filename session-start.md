@@ -118,3 +118,16 @@
 * Phase 2-D: Testing
 * Run actual tests (no assumptions!)
 * Document results in changelog.md
+
+## Task Execution Protocol
+
+When working on any task:
+1. Start with `task-execution.md`
+2. After implementation, switch to `testing.md`
+3. NO task is complete without test evidence
+4. NO assumptions - only real output counts
+
+Quick check:
+- Is task mapped to user story? 
+- Are all tests passing with evidence?
+- Is changelog updated with test results?
