@@ -2,7 +2,7 @@
 node_modules/
 .env
 
-# Frontend build artifacts (Vite)
+# Frontend build artifacts
 frontend/dist/
 frontend/build/
 
@@ -14,17 +14,31 @@ Cargo.lock
 test-ledger/
 **/*.so
 
-# Solana keypairs (SECURITY)
+# Solana keypairs - SECURITY CRITICAL
 *.keypair
-**/*.keypair
-.keypair
-keypairs/
 
-# IDE and system files
-.DS_Store
+# Anchor specific
+.program-logs/
+
+# Windows OS files
+Thumbs.db
+desktop.ini
+
+# IDE
 .vscode/
-.idea/
+.cursor/
 
 # Logs
 *.log
-logs/
+npm-debug.log*
+
+# Testing
+coverage/
+
+# TypeScript
+*.tsbuildinfo
+
+# Temp files
+*.tmp
+*.temp
+.cache
