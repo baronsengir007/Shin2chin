@@ -1,12 +1,12 @@
 [package]
-name = "shin2chin_betting"
+name = "shin2chin_pool"
 version = "0.1.0"
-description = "Shin2Chin Solana Betting Program - Phase A Foundation"
+description = "Auto-balancing pool betting system for Shin2Chin"
 edition = "2021"
 
 [lib]
 crate-type = ["cdylib", "lib"]
-name = "shin2chin_betting"
+name = "shin2chin_pool"
 
 [features]
 no-entrypoint = []
@@ -17,3 +17,4 @@ default = []
 
 [dependencies]
 anchor-lang = "0.31.1"
+anchor-spl = "0.31.1"
