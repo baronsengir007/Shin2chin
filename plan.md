@@ -6,9 +6,9 @@ Transform P2P betting system → Auto-balancing pool system
 ## 📅 Week 1: Backend Refactor (Nov 7-14, 2024)
 
 ### Day 1-2: Setup & Archive
-- [ ] Archive current P2P contract to `/archived` folder
-- [ ] Create new Anchor project: `shin2chin_pool`
-- [ ] Setup basic Anchor framework structure
+- [x] Archive current P2P contract to `/archived` folder
+- [x] Create new Anchor project: `shin2chin_pool`
+- [x] Setup basic Anchor framework structure
 - [ ] Copy reusable code (wallet connection, types)
 - [ ] Document why we pivoted (add to changelog)
 

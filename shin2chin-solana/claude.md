@@ -30,3 +30,19 @@
 - Automated balance mechanism
 - Fixed payout ratios
 - No reentrancy vulnerabilities
+
+## MCP Integration Points
+
+### Available MCPs:
+- **Sequential Thinking MCP**: Systematic analysis
+- **Memory MCP**: Context persistence  
+- **GitHub MCP**: Version control
+- **Solana Development MCP**: Blockchain patterns
+- **Semgrep MCP**: Security scanning
+- **Claude Task Master**: Task breakdown
+
+### Usage per Phase:
+- Phase 0-1: Sequential Thinking + Memory MCP
+- Phase 2: All MCPs as needed
+- Phase 3-4: Semgrep + Sequential Thinking
+- Phase 5: Testing with actual execution
