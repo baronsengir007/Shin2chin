@@ -1,0 +1,14 @@
+frontend/src/__tests__/integration/storeIntegration.test.ts
+frontend/src/__tests__/performance/memoryManagement.test.ts
+frontend/src/__tests__/security/errorHandling.test.ts
+frontend/src/__tests__/setup.ts
+frontend/src/__tests__/stores/bettingStore.test.ts
+frontend/src/__tests__/stores/blockchainStore.test.ts
+frontend/src/__tests__/stores/uiStore.test.ts
+frontend/src/__tests__/stores/walletStore.test.ts
+frontend/src/tests/components/events/EventCreationForm.test.tsx
+frontend/src/tests/components/events/OddsConfiguration.test.tsx
+frontend/src/tests/components/ui/MinimalLayout.test.tsx
+frontend/test-evidence.log
+frontend/test-runner.js
+frontend/vitest.config.ts
