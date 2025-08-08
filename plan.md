@@ -9,8 +9,8 @@ Transform P2P betting system → Auto-balancing pool system
 - [x] Archive current P2P contract to `/archived` folder
 - [x] Create new Anchor project: `shin2chin_pool`
 - [x] Setup basic Anchor framework structure
-- [ ] Copy reusable code (wallet connection, types)
-- [ ] Document why we pivoted (add to changelog)
+- [x] Copy reusable code (wallet connection, types) 
+- [x] Document why we pivoted (add to changelog)
 
 ### Day 3-4: Core Pool Contract Implementation
 ```rust
@@ -26,11 +26,11 @@ pub fn place_bet(
     ctx: Context<PlaceBet>, 
     team: bool, // true = team_a, false = team_b
     amount: u64
-) -> Result<()>
+) -> Result<()> // ✅ COMPLETED
 
 pub fn auto_balance(
     ctx: Context<AutoBalance>
-) -> Result<()> // Called at match_start_time
+) -> Result<()> // 🚧 PARTIAL - Logic complete, lifetime errors prevent compilation
 
 pub fn settle_event(
     ctx: Context<Settle>, 
