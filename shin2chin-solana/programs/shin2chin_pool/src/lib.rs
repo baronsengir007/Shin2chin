@@ -34,7 +34,7 @@ pub mod shin2chin_pool {
     }
 
     /// Auto-balance pools at match start time
-    pub fn auto_balance(ctx: Context<AutoBalance>) -> Result<()> {
+    pub fn auto_balance<'info>(ctx: Context<'_, '_, 'info, 'info, AutoBalance<'info>>) -> Result<()> {
         instructions::auto_balance(ctx)
     }
 

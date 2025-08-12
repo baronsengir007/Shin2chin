@@ -48,7 +48,7 @@ pub fn auto_balance<'info>(ctx: Context<'_, '_, 'info, 'info, AutoBalance<'info>
         }
         
         // Try to deserialize as bet account
-        match Account::<Bet>::try_from(account_info) {
+        match Account::<'info, Bet>::try_from(account_info) {
             Ok(bet_account) => {
                 // Security validations for bet account
                 require!(bet_account.event == event.key(), PoolError::Unauthorized);

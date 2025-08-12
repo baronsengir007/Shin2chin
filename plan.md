@@ -20,17 +20,17 @@ pub fn initialize_event(
     team_a: String, 
     team_b: String,
     match_start_time: i64
-) -> Result<()>
+) -> Result<()> // 🚧 IMPLEMENTATION COMPLETE, TESTING INCOMPLETE
 
 pub fn place_bet(
     ctx: Context<PlaceBet>, 
     team: bool, // true = team_a, false = team_b
     amount: u64
-) -> Result<()> // ✅ COMPLETED
+) -> Result<()> // 🚧 IMPLEMENTATION COMPLETE, TESTING INCOMPLETE
 
 pub fn auto_balance(
     ctx: Context<AutoBalance>
-) -> Result<()> // 🚧 PARTIAL - Logic complete, lifetime errors prevent compilation
+) -> Result<()> // 🚧 IMPLEMENTATION COMPLETE, TESTING INCOMPLETE
 
 pub fn settle_event(
     ctx: Context<Settle>, 

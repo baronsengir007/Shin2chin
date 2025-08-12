@@ -70,26 +70,7 @@
 * Estimated time?
 * Success criteria?
 * 
-* Based on plan.md, today's task is:
-* \[CURRENT\_TASK\_FROM\_PLAN]
-* 6\. MCP RECOMMENDATIONS FOR TASK
-* MCP Magic AI: Suggest which MCPs to use for current task:
-* For Backend Refactor Tasks:
 * 
-* Solana Development MCP: For smart contract patterns
-* Sequential Thinking MCP: For systematic refactoring
-* Semgrep MCP: For security checks
-* 
-* For Frontend Simplification:
-* 
-* Figma MCP: For UI design patterns
-* Sequential Thinking MCP: For component analysis
-* GitHub MCP: For removing old components
-* 
-* For Testing:
-* 
-* Sequential Thinking MCP: For test case design
-* Semgrep MCP: For security testing
 * 
 * 7\. SESSION SETUP COMMANDS
 * bash# Set up working environment
@@ -100,24 +81,7 @@
 * 
 * \# Start with clean working directory
 * git status
-* 8\. TASK EXECUTION TEMPLATE
-* For today's task, use this MCP-enhanced approach:
-* Phase 2-A: Problem Definition
-* Sequential Thinking MCP: Analyze the problem:
-* 
-* Which user story does this serve?
-* What acceptance criteria?
-* Security considerations?
-* 
-* Phase 2-B: Solution Design
-* MCP Magic AI: Generate creative solutions
-* Solana Development MCP: Check best practices
-* Phase 2-C: Implementation
-* GitHub MCP: Create commits with proper messages
-* Semgrep MCP: Check security as you code
-* Phase 2-D: Testing
-* Run actual tests (no assumptions!)
-* Document results in changelog.md
+
 
 ## Task Execution Protocol
 
