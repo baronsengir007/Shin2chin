@@ -24,4 +24,12 @@ pub enum PoolError {
     InvalidMatchTime,
     #[msg("Insufficient funds for payout")]
     InsufficientFunds,
+    #[msg("Bet is not in Won status")]
+    BetNotWon,
+    #[msg("Bet has already been claimed")]
+    BetAlreadyClaimed,
+    #[msg("Invalid winner specified")]
+    InvalidWinner,
+    #[msg("Payout calculation failed")]
+    PayoutCalculationFailed,
 }

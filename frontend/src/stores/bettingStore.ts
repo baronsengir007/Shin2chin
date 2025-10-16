@@ -1,23 +1,23 @@
 import { create } from 'zustand';
 import { PublicKey } from '@solana/web3.js';
-import { BettingStore, BetProposal, ActiveBet } from './types';
+import { BettingStore, PoolBet } from './types';
 import { validateBetAmount } from './utils/storeUtils';
 import useWalletStore from './walletStore';
 import useUIStore from './uiStore';
 
 const useBettingStore = create<BettingStore>((set, get) => ({
   activeBets: [],
-  betProposals: [],
   bettingHistory: [],
   loading: false,
 
-  createBetProposal: async (proposal: Omit<BetProposal, 'id' | 'status' | 'createdAt'>) => {
+  // Pool-based betting methods
+  placeBet: async (eventPubkey: PublicKey, team: boolean, amount: number) => {
     const { publicKey } = useWalletStore.getState();
     if (!publicKey) {
       throw new Error('Wallet not connected');
     }
 
-    if (!validateBetAmount(proposal.amount)) {
+    if (!validateBetAmount(amount)) {
       throw new Error('Invalid bet amount');
     }
 
@@ -25,131 +25,103 @@ const useBettingStore = create<BettingStore>((set, get) => ({
     useUIStore.getState().setLoading(true);
 
     try {
-      const newProposal: BetProposal = {
-        ...proposal,
+      // TODO: Call shin2chin_pool.place_bet instruction
+      // This will be implemented when we create the pool contract hook
+      
+      const newBet: PoolBet = {
         id: `bet_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
-        proposer: publicKey,
-        status: 'pending',
+        user: publicKey,
+        event: eventPubkey,
+        amount,
+        team,
+        timestamp: Date.now(),
+        status: 'Active',
         createdAt: new Date(),
       };
 
-      const { betProposals } = get();
+      const { activeBets } = get();
       set({ 
-        betProposals: [...betProposals, newProposal],
+        activeBets: [...activeBets, newBet],
         loading: false 
       });
       
       useUIStore.getState().setLoading(false);
+      useUIStore.getState().setError(null);
 
     } catch (error) {
-      console.error('Bet proposal creation failed:', error);
+      console.error('Bet placement failed:', error);
       set({ loading: false });
       useUIStore.getState().setLoading(false);
-      useUIStore.getState().setError('Failed to create bet proposal');
+      useUIStore.getState().setError('Failed to place bet');
       throw error;
     }
   },
 
-  acceptBet: async (proposalId: string) => {
+  claimWinnings: async (betId: string) => {
     const { publicKey } = useWalletStore.getState();
     if (!publicKey) {
       throw new Error('Wallet not connected');
     }
 
-    const { betProposals } = get();
-    const proposal = betProposals.find(p => p.id === proposalId);
+    const { activeBets } = get();
+    const bet = activeBets.find(b => b.id === betId);
     
-    if (!proposal) {
-      throw new Error('Bet proposal not found');
+    if (!bet) {
+      throw new Error('Bet not found');
     }
 
-    if (proposal.status !== 'pending') {
-      throw new Error('Bet proposal is no longer available');
-    }
-
-    if (proposal.proposer.equals(publicKey)) {
-      throw new Error('Cannot accept your own bet proposal');
+    if (bet.status !== 'Won') {
+      throw new Error('Can only claim winnings for won bets');
     }
 
     set({ loading: true });
     useUIStore.getState().setLoading(true);
 
     try {
-      const activeBet: ActiveBet = {
-        id: `active_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
-        bettor1: proposal.proposer,
-        bettor2: publicKey,
-        amount: proposal.amount,
-        escrowAccount: new PublicKey(new Uint8Array(32)),
-        description: proposal.description,
-        status: 'active',
-        createdAt: new Date(),
-      };
-
-      const updatedProposals = betProposals.map(p => 
-        p.id === proposalId ? { ...p, status: 'accepted' as const } : p
-      );
-
-      const { activeBets } = get();
-
-      set({
-        betProposals: updatedProposals,
-        activeBets: [...activeBets, activeBet],
-        loading: false
-      });
-
-      useUIStore.getState().setLoading(false);
-
-    } catch (error) {
-      console.error('Bet acceptance failed:', error);
-      set({ loading: false });
-      useUIStore.getState().setLoading(false);
-      useUIStore.getState().setError('Failed to accept bet');
-      throw error;
-    }
-  },
-
-  cancelBetProposal: async (proposalId: string) => {
-    const { publicKey } = useWalletStore.getState();
-    if (!publicKey) {
-      throw new Error('Wallet not connected');
-    }
-
-    const { betProposals } = get();
-    const proposal = betProposals.find(p => p.id === proposalId);
-    
-    if (!proposal) {
-      throw new Error('Bet proposal not found');
-    }
-
-    if (!proposal.proposer.equals(publicKey)) {
-      throw new Error('Can only cancel your own bet proposals');
-    }
-
-    if (proposal.status !== 'pending') {
-      throw new Error('Can only cancel pending bet proposals');
-    }
-
-    set({ loading: true });
-    useUIStore.getState().setLoading(true);
-
-    try {
-      const updatedProposals = betProposals.map(p => 
-        p.id === proposalId ? { ...p, status: 'cancelled' as const } : p
+      // TODO: Call shin2chin_pool.claim_winnings instruction
+      // This will be implemented when we create the pool contract hook
+      
+      const updatedBets = activeBets.map(b => 
+        b.id === betId ? { ...b, status: 'Claimed' as const } : b
       );
 
       set({ 
-        betProposals: updatedProposals,
+        activeBets: updatedBets,
+        loading: false 
+      });
+
+      useUIStore.getState().setLoading(false);
+      useUIStore.getState().setError(null);
+
+    } catch (error) {
+      console.error('Claim winnings failed:', error);
+      set({ loading: false });
+      useUIStore.getState().setLoading(false);
+      useUIStore.getState().setError('Failed to claim winnings');
+      throw error;
+    }
+  },
+
+  fetchUserBets: async (_userPubkey: PublicKey) => {
+    set({ loading: true });
+    useUIStore.getState().setLoading(true);
+
+    try {
+      // TODO: Query all bet accounts for user from shin2chin_pool
+      // This will be implemented when we create the pool contract hook
+      
+      set({ 
+        activeBets: [], // Will be populated from contract
         loading: false 
       });
 
       useUIStore.getState().setLoading(false);
 
     } catch (error) {
-      console.error('Bet cancellation failed:', error);
+      console.error('Failed to fetch user bets:', error);
       set({ loading: false });
       useUIStore.getState().setLoading(false);
-      useUIStore.getState().setError('Failed to cancel bet proposal');
+      useUIStore.getState().setError('Failed to fetch user bets');
       throw error;
     }
   },
@@ -165,7 +137,9 @@ const useBettingStore = create<BettingStore>((set, get) => ({
 
     try {
       const { activeBets } = get();
-      const settledBets = activeBets.filter(bet => bet.status === 'settled');
+      const settledBets = activeBets.filter(bet => 
+        bet.status === 'Won' || bet.status === 'Lost' || bet.status === 'Claimed'
+      );
       
       set({ 
         bettingHistory: settledBets,

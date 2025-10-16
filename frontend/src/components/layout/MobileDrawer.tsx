@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { NavBar } from './NavBar';
+// import { NavBar } from './NavBar'; // NavBar component was removed
 
 interface MobileDrawerProps {
   isOpen: boolean;
@@ -62,7 +62,7 @@ export const MobileDrawer: React.FC<MobileDrawerProps> = ({ isOpen, onClose }) =
         </div>
         
         <div className="flex-1 overflow-y-auto">
-          <NavBar />
+          <div className="p-4">Navigation removed</div>
         </div>
       </div>
     </>

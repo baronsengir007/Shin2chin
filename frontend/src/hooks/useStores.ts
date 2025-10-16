@@ -36,13 +36,13 @@ export const useBlockchainActions = () => {
 };
 
 export const useBettingState = () => {
-  const { activeBets, betProposals, bettingHistory, loading } = useBettingStore();
-  return { activeBets, betProposals, bettingHistory, loading };
+  const { activeBets, bettingHistory, loading } = useBettingStore();
+  return { activeBets, bettingHistory, loading };
 };
 
 export const useBettingActions = () => {
-  const { createBetProposal, acceptBet, cancelBetProposal, loadBettingHistory } = useBettingStore();
-  return { createBetProposal, acceptBet, cancelBetProposal, loadBettingHistory };
+  const { placeBet, claimWinnings, fetchUserBets, loadBettingHistory } = useBettingStore();
+  return { placeBet, claimWinnings, fetchUserBets, loadBettingHistory };
 };
 
 export const useUIState = () => {

@@ -38,7 +38,7 @@ export class AuthorizationUtils {
     // Only participants can settle
     return (
       context.userPublicKey.equals(betCreator) ||
-      (betAcceptor && context.userPublicKey.equals(betAcceptor))
+      (betAcceptor ? context.userPublicKey.equals(betAcceptor) : false)
     );
   }
 
@@ -102,7 +102,7 @@ export class AuthorizationUtils {
 
     return (
       context.userPublicKey.equals(betCreator) ||
-      (betAcceptor && context.userPublicKey.equals(betAcceptor))
+      (betAcceptor ? context.userPublicKey.equals(betAcceptor) : false)
     );
   }
 
@@ -233,9 +233,9 @@ export class AuthorizationUtils {
   // Rate limiting check (basic implementation)
   static checkRateLimit(
     userPublicKey: PublicKey | null,
-    operation: string,
-    maxOperations: number = 10,
-    timeWindowMs: number = 60000 // 1 minute
+    _operation: string,
+    _maxOperations: number = 10,
+    _timeWindowMs: number = 60000 // 1 minute
   ): { allowed: boolean; error?: string } {
     if (!userPublicKey) {
       return { allowed: false, error: 'User not authenticated' };

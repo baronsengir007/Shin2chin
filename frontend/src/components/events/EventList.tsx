@@ -1,21 +1,11 @@
 import React from 'react';
-
-interface Event {
-  id: string;
-  title: string;
-  category: string;
-  status: 'upcoming' | 'live' | 'completed';
-  startTime: Date;
-  participants: string[];
-  currentOdds: { [key: string]: number };
-  bettingVolume: number;
-  lastUpdate: Date;
-}
+import { PublicKey } from '@solana/web3.js';
+import { PoolEvent } from '../../stores/types';
 
 interface EventListProps {
-  events: Event[];
-  selectedEvent: Event | null;
-  onSelectEvent: (event: Event) => void;
+  events: Array<PoolEvent & { id: string; pubkey: PublicKey }>;
+  selectedEvent: (PoolEvent & { id: string; pubkey: PublicKey }) | null;
+  onSelectEvent: (event: PoolEvent & { id: string; pubkey: PublicKey }) => void;
 }
 
 export const EventList: React.FC<EventListProps> = ({ 
@@ -23,95 +13,87 @@ export const EventList: React.FC<EventListProps> = ({
   selectedEvent, 
   onSelectEvent 
 }) => {
-  const getStatusColor = (status: Event['status']) => {
-    switch (status) {
-      case 'live':
-        return 'bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-400';
-      case 'upcoming':
-        return 'bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-400';
-      case 'completed':
-        return 'bg-gray-100 text-gray-800 dark:bg-gray-900/20 dark:text-gray-400';
+
+  const getTimeDisplay = (event: PoolEvent) => {
+    const now = Date.now() / 1000;
+    const diff = event.matchStartTime - now;
+    
+    if (event.settled) {
+      return 'Completed';
+    } else if (event.matchStartTime <= now) {
+      return 'LIVE NOW';
+    } else {
+      const hours = Math.floor(diff / 3600);
+      const minutes = Math.floor((diff % 3600) / 60);
+      return `Starts in ${hours}h ${minutes}m`;
     }
   };
 
-  const getTimeDisplay = (event: Event) => {
-    const now = new Date();
-    const diff = event.startTime.getTime() - now.getTime();
-    
-    if (event.status === 'live') {
-      return 'LIVE NOW';
-    } else if (event.status === 'upcoming') {
-      const hours = Math.floor(diff / (1000 * 60 * 60));
-      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-      return `Starts in ${hours}h ${minutes}m`;
-    } else {
-      return 'Completed';
-    }
+  const formatPoolSize = (lamports: number) => {
+    return (lamports / 1e9).toFixed(2);
   };
 
   if (events.length === 0) {
     return (
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-8">
-        <p className="text-center text-gray-500 dark:text-gray-400">
-          No events found matching your criteria
-        </p>
+      <div className="bg-white rounded-2xl p-8 text-center">
+        <div className="text-slate-400 text-6xl mb-4">🏆</div>
+        <h3 className="text-xl font-light text-slate-600 mb-2">No Events</h3>
+        <p className="text-slate-500">Check back later for new matches</p>
       </div>
     );
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       {events.map((event) => (
         <div
           key={event.id}
           onClick={() => onSelectEvent(event)}
           className={`
-            bg-white dark:bg-gray-800 rounded-lg shadow p-6 cursor-pointer transition-all
+            bg-white rounded-2xl p-6 cursor-pointer transition-all
             ${selectedEvent?.id === event.id 
-              ? 'ring-2 ring-blue-500 shadow-lg' 
+              ? 'ring-2 ring-slate-300 shadow-lg' 
               : 'hover:shadow-md'
             }
           `}
         >
-          <div className="flex items-start justify-between mb-4">
-            <div>
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                {event.title}
-              </h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400">
-                {event.category}
-              </p>
-            </div>
-            <div className="flex flex-col items-end space-y-2">
-              <span className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(event.status)}`}>
-                {event.status.toUpperCase()}
-              </span>
-              <span className="text-sm text-gray-600 dark:text-gray-400">
-                {getTimeDisplay(event)}
-              </span>
+          {/* Event Header - Single Element */}
+          <div className="text-center mb-6">
+            <h3 className="text-xl font-light text-slate-800 mb-2">
+              {event.teamA} vs {event.teamB}
+            </h3>
+            <div className="text-sm text-slate-500">
+              {getTimeDisplay(event)}
             </div>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            {event.participants.map((participant) => (
-              <div key={participant} className="text-center">
-                <p className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                  {participant}
-                </p>
-                <p className="text-lg font-bold text-gray-900 dark:text-white">
-                  {event.currentOdds[participant]?.toFixed(2)}x
-                </p>
+          {/* Pool Information - Second Element */}
+          <div className="grid grid-cols-2 gap-4 mb-6">
+            <div className="text-center p-4 bg-slate-50 rounded-xl">
+              <div className="text-sm text-slate-600 mb-1">{event.teamA}</div>
+              <div className="text-lg font-medium text-slate-800">
+                {formatPoolSize(event.teamAPool)} SOL
               </div>
-            ))}
+            </div>
+            <div className="text-center p-4 bg-slate-50 rounded-xl">
+              <div className="text-sm text-slate-600 mb-1">{event.teamB}</div>
+              <div className="text-lg font-medium text-slate-800">
+                {formatPoolSize(event.teamBPool)} SOL
+              </div>
+            </div>
           </div>
 
-          <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700 flex justify-between text-sm">
-            <span className="text-gray-600 dark:text-gray-400">
-              Volume: {event.bettingVolume.toFixed(0)} SOL
-            </span>
-            <span className="text-gray-600 dark:text-gray-400">
-              Updated: {event.lastUpdate.toLocaleTimeString()}
-            </span>
+          {/* Status - Third Element */}
+          <div className="text-center">
+            {event.settled && event.winner !== null ? (
+              <div className="text-sm text-slate-600">
+                Winner: {event.winner ? event.teamA : event.teamB}
+              </div>
+            ) : (
+              <div className="text-sm text-slate-500">
+                Total: {formatPoolSize(event.teamAPool + event.teamBPool)} SOL
+              </div>
+            )}
           </div>
         </div>
       ))}

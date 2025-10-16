@@ -1,22 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useWalletConnection, useWalletBalance } from '../../hooks/store/useWalletConnection';
-import { useToast } from '../../hooks/store/useUIState';
+import useWalletStore from '../../stores/walletStore';
 
 export const WalletConnector: React.FC = () => {
-  const { publicKey, connected, connecting, connect, disconnect } = useWalletConnection();
-  const { balance, formattedBalance, isLoading: balanceLoading } = useWalletBalance();
-  const { showSuccess, showError } = useToast();
+  const { publicKey, connected, connecting, connect, disconnect, balance } = useWalletStore();
   const [isDetecting, setIsDetecting] = useState(false);
 
   useEffect(() => {
-    // Check if wallet is available
-    const checkWallet = () => {
-      if (typeof window !== 'undefined' && window.solana) {
-        return true;
-      }
-      return false;
-    };
-
     setIsDetecting(true);
     setTimeout(() => {
       setIsDetecting(false);
@@ -26,25 +15,25 @@ export const WalletConnector: React.FC = () => {
   const handleConnect = async () => {
     try {
       await connect();
-      showSuccess('Wallet connected successfully');
+      console.log('Wallet connected successfully');
     } catch (error) {
-      showError('Failed to connect wallet. Please try again.');
+      console.error('Failed to connect wallet:', error);
     }
   };
 
   const handleDisconnect = async () => {
     try {
       await disconnect();
-      showSuccess('Wallet disconnected');
+      console.log('Wallet disconnected');
     } catch (error) {
-      showError('Failed to disconnect wallet');
+      console.error('Failed to disconnect wallet:', error);
     }
   };
 
   const copyAddress = () => {
     if (publicKey) {
       navigator.clipboard.writeText(publicKey.toBase58());
-      showSuccess('Address copied to clipboard');
+      console.log('Address copied to clipboard');
     }
   };
 
@@ -136,11 +125,7 @@ export const WalletConnector: React.FC = () => {
               Balance
             </label>
             <div className="text-2xl font-bold text-gray-900 dark:text-white">
-              {balanceLoading ? (
-                <div className="animate-pulse bg-gray-200 dark:bg-gray-700 h-8 w-24 rounded"></div>
-              ) : (
-                `${formattedBalance} SOL`
-              )}
+              {balance ? `${balance.toFixed(4)} SOL` : '0.0000 SOL'}
             </div>
           </div>
 

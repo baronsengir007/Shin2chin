@@ -20,36 +20,36 @@ export interface BlockchainStore {
   cleanup: () => void;
 }
 
-export interface BetProposal {
+export interface PoolBet {
   id: string;
-  proposer: PublicKey;
+  user: PublicKey;
+  event: PublicKey;
   amount: number;
-  description: string;
-  odds: number;
-  status: 'pending' | 'accepted' | 'cancelled';
+  team: boolean; // true = team_a, false = team_b
+  timestamp: number;
+  status: 'Active' | 'Refunded' | 'Won' | 'Lost' | 'Claimed';
   createdAt: Date;
 }
 
-export interface ActiveBet {
-  id: string;
-  bettor1: PublicKey;
-  bettor2: PublicKey;
-  amount: number;
-  escrowAccount: PublicKey;
-  description: string;
-  status: 'active' | 'settled' | 'disputed';
-  createdAt: Date;
-  settledAt?: Date;
+export interface PoolEvent {
+  teamA: string;
+  teamB: string;
+  teamAPool: number;
+  teamBPool: number;
+  matchStartTime: number;
+  balanced: boolean;
+  settled: boolean;
+  winner: boolean | null; // true = team_a won, false = team_b won, null = not settled
+  admin: PublicKey;
 }
 
 export interface BettingStore {
-  activeBets: ActiveBet[];
-  betProposals: BetProposal[];
-  bettingHistory: ActiveBet[];
+  activeBets: PoolBet[];
+  bettingHistory: PoolBet[];
   loading: boolean;
-  createBetProposal: (proposal: Omit<BetProposal, 'id' | 'status' | 'createdAt'>) => Promise<void>;
-  acceptBet: (proposalId: string) => Promise<void>;
-  cancelBetProposal: (proposalId: string) => Promise<void>;
+  placeBet: (eventPubkey: PublicKey, team: boolean, amount: number) => Promise<void>;
+  claimWinnings: (betId: string) => Promise<void>;
+  fetchUserBets: (userPubkey: PublicKey) => Promise<void>;
   loadBettingHistory: () => Promise<void>;
 }
 

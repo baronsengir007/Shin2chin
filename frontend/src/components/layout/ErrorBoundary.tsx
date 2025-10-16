@@ -1,5 +1,5 @@
 import React, { Component, ReactNode } from 'react';
-import { useUIStore } from '../../stores/uiStore';
+import useUIStore from '../../stores/uiStore';
 
 interface ErrorBoundaryProps {
   children: ReactNode;
@@ -24,7 +24,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
     console.error('Error caught by boundary:', error, errorInfo);
     // Report to error tracking service
-    useUIStore.getState().setError('Application error occurred', error);
+    useUIStore.getState().setError('Application error occurred');
   }
 
   render() {
