@@ -29,6 +29,8 @@ pub fn settle_event(ctx: Context<Settle>, winner: bool) -> Result<()> {
     // Update event with winner
     event.settled = true;
     event.winner = Some(winner);
+    event.state = EventState::Settled;
+    event.settlement_version = event.settlement_version.checked_add(1).unwrap();
 
     // Note: Bet status updates will be handled by remaining_accounts
     // in a separate instruction or by the client calling individual bet updates

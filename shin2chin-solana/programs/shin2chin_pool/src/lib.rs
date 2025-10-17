@@ -50,4 +50,14 @@ pub mod shin2chin_pool {
     pub fn claim_winnings(ctx: Context<Claim>) -> Result<()> {
         instructions::claim_winnings(ctx)
     }
+
+    /// Update bet status to Refunded (called after auto_balance)
+    pub fn update_bet_status_refunded(ctx: Context<UpdateBetStatusRefunded>) -> Result<()> {
+        instructions::update_bet_status_refunded(ctx)
+    }
+
+    /// Update bet status to Won/Lost (called after settle_event)
+    pub fn update_bet_status_settled(ctx: Context<UpdateBetStatusSettled>) -> Result<()> {
+        instructions::update_bet_status_settled(ctx)
+    }
 }

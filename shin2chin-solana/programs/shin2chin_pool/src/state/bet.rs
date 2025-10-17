@@ -15,6 +15,10 @@ pub struct Bet {
     pub timestamp: i64,
     /// Current status of the bet
     pub status: BetStatus,
+    /// Whether winnings have been claimed
+    pub claimed: bool,
+    /// Settlement version when this bet was processed
+    pub bet_settlement_version: u64,
     /// Bump seed
     pub bump: u8,
 }
@@ -28,6 +32,8 @@ impl Bet {
         1 + // team bool
         8 + // timestamp i64
         1 + // status enum
+        1 + // claimed bool
+        8 + // bet_settlement_version u64
         1; // bump u8
 
     /// Check if bet is active (not refunded, claimed, etc)

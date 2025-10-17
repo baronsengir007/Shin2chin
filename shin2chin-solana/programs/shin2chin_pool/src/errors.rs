@@ -32,4 +32,16 @@ pub enum PoolError {
     InvalidWinner,
     #[msg("Payout calculation failed")]
     PayoutCalculationFailed,
+    #[msg("Team name is too long (max 32 characters)")]
+    TeamNameTooLong,
+    #[msg("Team name cannot be empty")]
+    EmptyTeamName,
+    #[msg("Team name contains invalid characters (only alphanumeric and spaces allowed)")]
+    InvalidTeamName,
+    #[msg("Invalid event state for this operation")]
+    InvalidEventState,
+    #[msg("Event has not been balanced yet")]
+    EventNotBalanced,
+    #[msg("Bet has already been updated for this settlement")]
+    AlreadyUpdated,
 }

@@ -16,7 +16,7 @@ pub fn auto_balance<'info>(ctx: Context<'_, '_, 'info, 'info, AutoBalance<'info>
     // Security validations
     require!(event.needs_balancing(), PoolError::BalancingNotNeeded);
     require!(!event.settled, PoolError::EventAlreadySettled);
-    require!(!event.balanced, PoolError::BalancingNotNeeded);
+    require!(event.state == EventState::Created, PoolError::InvalidEventState);
     
     // Ensure we have some bets to process
     require!(!ctx.remaining_accounts.is_empty(), PoolError::InsufficientFunds);
@@ -133,7 +133,7 @@ pub fn auto_balance<'info>(ctx: Context<'_, '_, 'info, 'info, AutoBalance<'info>
     }
     
     // Mark event as balanced
-    event.balanced = true;
+    event.state = EventState::Balanced;
     
     msg!("Auto-balance completed: refunded {} total", refunded_amount);
     

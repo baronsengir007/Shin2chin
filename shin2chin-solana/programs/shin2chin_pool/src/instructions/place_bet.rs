@@ -4,13 +4,14 @@ use crate::state::*;
 use crate::errors::PoolError;
 
 #[derive(Accounts)]
+#[instruction(team: bool)]
 pub struct PlaceBet<'info> {
     #[account(mut)]
     pub event: Account<'info, Event>,
     
     #[account(
         init,
-        seeds = [b"bet", user.key().as_ref(), event.key().as_ref()],
+        seeds = [b"bet", user.key().as_ref(), event.key().as_ref(), &[team as u8]],
         bump,
         payer = user,
         space = Bet::SIZE
@@ -62,6 +63,8 @@ pub fn place_bet(
     bet.team = team;
     bet.timestamp = Clock::get()?.unix_timestamp;
     bet.status = BetStatus::Active;
+    bet.claimed = false;
+    bet.bet_settlement_version = 0;
     bet.bump = ctx.bumps.bet;
     
     // Update event pool balances with overflow protection

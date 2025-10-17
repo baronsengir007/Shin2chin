@@ -33,6 +33,7 @@ pub fn claim_winnings(ctx: Context<Claim>) -> Result<()> {
     require!(event.settled, PoolError::EventNotSettled);
     require!(bet.status == BetStatus::Won, PoolError::CannotClaim);
     require!(bet.user == user.key(), PoolError::Unauthorized);
+    require!(!bet.claimed, PoolError::AlreadyClaimed);
 
     // Calculate payout (1.95x)
     let payout = bet.calculate_payout();
@@ -47,6 +48,7 @@ pub fn claim_winnings(ctx: Context<Claim>) -> Result<()> {
 
     // Update bet status to claimed
     bet.status = BetStatus::Claimed;
+    bet.claimed = true;
 
     Ok(())
 }

@@ -8,7 +8,7 @@ pub struct InitEvent<'info> {
     #[account(
         init,
         payer = admin,
-        space = Event::size(team_a.len(), team_b.len()),
+        space = Event::MAX_SIZE,
         seeds = [b"event", admin.key().as_ref(), team_a.as_bytes(), team_b.as_bytes()],
         bump
     )]
@@ -29,7 +29,20 @@ pub fn initialize_event(
     let event = &mut ctx.accounts.event;
     let clock = Clock::get()?;
 
-    // Validation
+    // String validation
+    require!(team_a.len() <= 32, PoolError::TeamNameTooLong);
+    require!(team_b.len() <= 32, PoolError::TeamNameTooLong);
+    require!(!team_a.is_empty() && !team_b.is_empty(), PoolError::EmptyTeamName);
+    require!(
+        is_valid_team_name(&team_a),
+        PoolError::InvalidTeamName
+    );
+    require!(
+        is_valid_team_name(&team_b),
+        PoolError::InvalidTeamName
+    );
+
+    // Business logic validation
     require!(team_a != team_b, PoolError::DuplicateTeamNames);
     require!(
         match_start_time > clock.unix_timestamp,
@@ -42,10 +55,11 @@ pub fn initialize_event(
     event.team_a_pool = 0;
     event.team_b_pool = 0;
     event.match_start_time = match_start_time;
-    event.balanced = false;
+    event.state = EventState::Created;
     event.settled = false;
     event.winner = None;
     event.admin = ctx.accounts.admin.key();
+    event.settlement_version = 0;
     event.bump = ctx.bumps.event;
 
     msg!(
@@ -144,4 +158,14 @@ mod tests {
         assert!(max_size > min_size, "Size should increase with longer team names");
         assert!(min_size > 50, "Minimum size should accommodate base fields (discriminator + fixed fields)");
     }
+}
+
+/// Optimized character validation function that breaks early on invalid characters
+fn is_valid_team_name(name: &str) -> bool {
+    for c in name.chars() {
+        if !c.is_alphanumeric() && c != ' ' {
+            return false;
+        }
+    }
+    true
 }
