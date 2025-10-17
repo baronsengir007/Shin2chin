@@ -1,17 +1,23 @@
 import { useCallback } from 'react';
-import { PublicKey } from '@solana/web3.js';
+import { PublicKey, SystemProgram } from '@solana/web3.js';
+import { Program, AnchorProvider, web3 } from '@project-serum/anchor';
+import { BN } from 'bn.js';
 import { PoolEvent, PoolBet } from '../stores/types';
 import useWalletStore from '../stores/walletStore';
 import useUIStore from '../stores/uiStore';
+import IDL from '../idl/shin2chin_pool.json';
 
-// Mock IDL for now - will be replaced with actual IDL from contract
+const PROGRAM_ID = new PublicKey('11111111111111111111111111111112');
 
 export const usePoolContract = () => {
   const { connection, publicKey } = useWalletStore();
   const { setError, setLoading } = useUIStore();
 
-  // Mock program ID - will be replaced with actual program ID
-  // const PROGRAM_ID = new PublicKey('11111111111111111111111111111112');
+  // Helper function to initialize Anchor program
+  const getProgram = (connection: web3.Connection, wallet: any) => {
+    const provider = new AnchorProvider(connection, wallet, {});
+    return new Program(IDL as any, PROGRAM_ID, provider);
+  };
 
   const placeBet = useCallback(async (
     eventPubkey: PublicKey,
@@ -25,28 +31,31 @@ export const usePoolContract = () => {
     setLoading(true);
 
     try {
-      // TODO: Replace with actual contract call
-      // const program = new Program(MOCK_IDL, PROGRAM_ID, provider);
-      // const tx = await program.methods
-      //   .placeBet(team, new BN(amount))
-      //   .accounts({
-      //     event: eventPubkey,
-      //     bet: betAccount,
-      //     user: publicKey,
-      //     systemProgram: SystemProgram.programId
-      //   })
-      //   .rpc();
+      const program = getProgram(connection, { publicKey });
 
-      // Mock implementation for now
-      console.log('Placing bet:', { eventPubkey, team, amount });
-      
-      // Simulate transaction delay
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      const mockTxId = `mock_tx_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+      // Derive bet PDA (includes team to prevent duplicate bets - Blocker #1 fix)
+      const [betPda] = PublicKey.findProgramAddressSync(
+        [
+          Buffer.from('bet'),
+          publicKey.toBuffer(),
+          eventPubkey.toBuffer(),
+          Buffer.from([team ? 1 : 0])
+        ],
+        PROGRAM_ID
+      );
+
+      const tx = await program.methods
+        .placeBet(team, new BN(amount))
+        .accounts({
+          event: eventPubkey,
+          bet: betPda,
+          user: publicKey,
+          systemProgram: SystemProgram.programId,
+        })
+        .rpc();
       
       setLoading(false);
-      return mockTxId;
+      return tx;
 
     } catch (error) {
       console.error('Place bet failed:', error);
@@ -67,28 +76,20 @@ export const usePoolContract = () => {
     setLoading(true);
 
     try {
-      // TODO: Replace with actual contract call
-      // const program = new Program(MOCK_IDL, PROGRAM_ID, provider);
-      // const tx = await program.methods
-      //   .claimWinnings()
-      //   .accounts({
-      //     event: eventPubkey,
-      //     bet: betPubkey,
-      //     user: publicKey,
-      //     systemProgram: SystemProgram.programId
-      //   })
-      //   .rpc();
+      const program = getProgram(connection, { publicKey });
 
-      // Mock implementation for now
-      console.log('Claiming winnings:', { eventPubkey, betPubkey });
-      
-      // Simulate transaction delay
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      const mockTxId = `mock_tx_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+      const tx = await program.methods
+        .claimWinnings()
+        .accounts({
+          event: eventPubkey,
+          bet: betPubkey,
+          user: publicKey,
+          systemProgram: SystemProgram.programId,
+        })
+        .rpc();
       
       setLoading(false);
-      return mockTxId;
+      return tx;
 
     } catch (error) {
       console.error('Claim winnings failed:', error);
@@ -106,47 +107,29 @@ export const usePoolContract = () => {
     setLoading(true);
 
     try {
-      // TODO: Replace with actual contract call
-      // const program = new Program(MOCK_IDL, PROGRAM_ID, provider);
-      // const events = await program.account.event.all();
+      const program = getProgram(connection, { publicKey: PublicKey.default });
 
-      // Mock implementation for now
-      console.log('Fetching events');
-      
-      // Simulate API delay
-      await new Promise(resolve => setTimeout(resolve, 500));
-      
-      const mockEvents: Array<PoolEvent & { id: string; pubkey: PublicKey }> = [
-        {
-          id: 'event1',
-          pubkey: new PublicKey('11111111111111111111111111111113'),
-          teamA: 'Chelsea',
-          teamB: 'Manchester United',
-          teamAPool: 1000000000, // 1 SOL in lamports
-          teamBPool: 2000000000, // 2 SOL in lamports
-          matchStartTime: Date.now() / 1000 + 3600, // 1 hour from now
-          balanced: false,
-          settled: false,
-          winner: null,
-          admin: new PublicKey('11111111111111111111111111111112'),
-        },
-        {
-          id: 'event2',
-          pubkey: new PublicKey('11111111111111111111111111111114'),
-          teamA: 'Arsenal',
-          teamB: 'Liverpool',
-          teamAPool: 5000000000, // 5 SOL in lamports
-          teamBPool: 5000000000, // 5 SOL in lamports
-          matchStartTime: Date.now() / 1000 - 3600, // 1 hour ago
-          balanced: true,
-          settled: true,
-          winner: true, // Arsenal won
-          admin: new PublicKey('11111111111111111111111111111112'),
-        },
-      ];
+      const events = await program.account.event.all();
+
+      const mappedEvents = events.map(event => {
+        const account = event.account as any;
+        return {
+          id: event.publicKey.toString(),
+          pubkey: event.publicKey,
+          teamA: account.teamA as string,
+          teamB: account.teamB as string,
+          teamAPool: account.teamAPool.toNumber(),
+          teamBPool: account.teamBPool.toNumber(),
+          matchStartTime: account.matchStartTime.toNumber(),
+          balanced: account.balanced as boolean,
+          settled: account.settled as boolean,
+          winner: account.winner as boolean | null,
+          admin: account.admin as PublicKey,
+        };
+      });
       
       setLoading(false);
-      return mockEvents;
+      return mappedEvents;
 
     } catch (error) {
       console.error('Fetch events failed:', error);
@@ -164,43 +147,65 @@ export const usePoolContract = () => {
     setLoading(true);
 
     try {
-      // TODO: Replace with actual contract call
-      // const program = new Program(MOCK_IDL, PROGRAM_ID, provider);
-      // const bets = await program.account.bet.all([
-      //   { memcmp: { offset: 8, bytes: userPubkey.toBase58() } }
-      // ]);
+      const program = getProgram(connection, { publicKey: PublicKey.default });
 
-      // Mock implementation for now
-      console.log('Fetching user bets:', userPubkey.toString());
-      
-      // Simulate API delay
-      await new Promise(resolve => setTimeout(resolve, 500));
-      
-      const mockBets: PoolBet[] = [
+      // Fetch all user bets
+      const bets = await program.account.bet.all([
         {
-          id: 'bet1',
-          user: userPubkey,
-          event: new PublicKey('11111111111111111111111111111113'),
-          amount: 1000000000, // 1 SOL in lamports
-          team: true,
-          timestamp: Date.now(),
-          status: 'Active',
-          createdAt: new Date(),
-        },
-        {
-          id: 'bet2',
-          user: userPubkey,
-          event: new PublicKey('11111111111111111111111111111114'),
-          amount: 2000000000, // 2 SOL in lamports
-          team: false,
-          timestamp: Date.now(),
-          status: 'Won',
-          createdAt: new Date(),
-        },
-      ];
+          memcmp: {
+            offset: 8,
+            bytes: userPubkey.toBase58()
+          }
+        }
+      ]);
+
+      // Map bets and automatically update stale statuses (Option B: invisible to user)
+      const updatedBets = await Promise.all(bets.map(async (bet) => {
+        const account = bet.account as any;
+        let status = account.status as string;
+        
+        // Fetch event data to check if status needs updating
+        const eventData = await program.account.event.fetch(account.event as PublicKey);
+        const eventAccount = eventData as any;
+        
+        // Option B: Automatically update status if needed (invisible to user)
+        if (account.status === 'Active') {
+          try {
+            // If event is settled, update bet status to Won/Lost
+            if (eventAccount.settled && eventAccount.winner !== null) {
+              await updateBetStatusSettled(account.event as PublicKey, bet.publicKey);
+              // Determine new status based on winner
+              status = account.team === eventAccount.winner ? 'Won' : 'Lost';
+            }
+            // If event is balanced and user was on larger pool, update to Refunded
+            else if (eventAccount.balanced && !eventAccount.settled) {
+              const [largerPoolIsTeamA] = eventAccount.teamAPool.toNumber() > eventAccount.teamBPool.toNumber() 
+                ? [true] : [false];
+              if (account.team === largerPoolIsTeamA) {
+                await updateBetStatusRefunded(account.event as PublicKey, bet.publicKey);
+                status = 'Refunded';
+              }
+            }
+          } catch (error) {
+            // Status update failed, keep original status
+            console.warn('Failed to update bet status:', error);
+          }
+        }
+        
+        return {
+          id: bet.publicKey.toString(),
+          user: account.user as PublicKey,
+          event: account.event as PublicKey,
+          amount: account.amount.toNumber(),
+          team: account.team as boolean,
+          timestamp: account.timestamp.toNumber(),
+          status: status as "Active" | "Refunded" | "Won" | "Lost" | "Claimed",
+          createdAt: new Date(account.timestamp.toNumber() * 1000),
+        };
+      }));
       
       setLoading(false);
-      return mockBets;
+      return updatedBets;
 
     } catch (error) {
       console.error('Fetch user bets failed:', error);
@@ -210,11 +215,58 @@ export const usePoolContract = () => {
     }
   }, [connection, setError, setLoading]);
 
+  // Status update helper functions (used internally by fetchUserBets)
+  const updateBetStatusRefunded = useCallback(async (
+    eventPubkey: PublicKey,
+    betPubkey: PublicKey
+  ): Promise<string> => {
+    if (!connection || !publicKey) {
+      throw new Error('Wallet not connected');
+    }
+
+    const program = getProgram(connection, { publicKey });
+
+    const tx = await program.methods
+      .updateBetStatusRefunded()
+      .accounts({
+        event: eventPubkey,
+        bet: betPubkey,
+        user: publicKey,
+      })
+      .rpc();
+
+    return tx;
+  }, [connection, publicKey]);
+
+  const updateBetStatusSettled = useCallback(async (
+    eventPubkey: PublicKey,
+    betPubkey: PublicKey
+  ): Promise<string> => {
+    if (!connection || !publicKey) {
+      throw new Error('Wallet not connected');
+    }
+
+    const program = getProgram(connection, { publicKey });
+
+    const tx = await program.methods
+      .updateBetStatusSettled()
+      .accounts({
+        event: eventPubkey,
+        bet: betPubkey,
+        user: publicKey,
+      })
+      .rpc();
+
+    return tx;
+  }, [connection, publicKey]);
+
   return {
     placeBet,
     claimWinnings,
     fetchEvents,
     fetchUserBets,
+    updateBetStatusRefunded,
+    updateBetStatusSettled,
   };
 };
 
